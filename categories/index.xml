@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on bibliotek Adriano</title>
+    <link>https://yoseodoc.github.io/categories/</link>
+    <description>Recent content in Categories on bibliotek Adriano</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 20 Jul 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://yoseodoc.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>newBlog</title>
+      <link>https://yoseodoc.github.io/categories/newblog/</link>
+      <pubDate>Mon, 20 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://yoseodoc.github.io/categories/newblog/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
