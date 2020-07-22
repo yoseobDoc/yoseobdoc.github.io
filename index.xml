@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>bibliotek Adriano</title>
-    <link>https://yoseodoc.github.io/</link>
-    <description>Recent content on bibliotek Adriano</description>
+    <title>YoseobDoc</title>
+    <link>https://yoseobdoc.github.io/</link>
+    <description>Recent content on YoseobDoc</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2015 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jul 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://yoseodoc.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://yoseobdoc.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Cover image showcase</title>
-      <link>https://yoseodoc.github.io/2015/05/cover-image-showcase/</link>
-      <pubDate>Wed, 13 May 2015 00:00:00 +0000</pubDate>
+      <title>소금 지방 산 열</title>
+      <link>https://yoseobdoc.github.io/2020/07/%EC%86%8C%EA%B8%88-%EC%A7%80%EB%B0%A9-%EC%82%B0-%EC%97%B4/</link>
+      <pubDate>Wed, 22 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://yoseodoc.github.io/2015/05/cover-image-showcase/</guid>
-      <description>&lt;p&gt;Tranquilpeak integrate a unique &amp;ldquo;cover image&amp;rdquo; feature. Open this post to see how this feature sublimate your article.&lt;/p&gt;</description>
+      <guid>https://yoseobdoc.github.io/2020/07/%EC%86%8C%EA%B8%88-%EC%A7%80%EB%B0%A9-%EC%82%B0-%EC%97%B4/</guid>
+      <description>전세계 요리베스트셀러&amp;lt;소금 지방 산 열&amp;gt; 사민 노스랏의 __소금,지방,산,열__에 대한 꿀팁을 웬디 맥노튼의 그림들과 함께 만나보세요.
+요리를 잘 하지 못하는 사람들도, 먹는 것을 좋아하는 사람이라면 얼마든지 쉽게 시작할 수 있는 매력적인 요리책 &amp;lt;소금 지방 산 열&amp;gt;
+   ​
+  전세계 요리베스트셀러&amp;lt;소금 지방 산 열&amp;gt; 🧂🧈 사민 노스랏의 소금,지방,산,열에 대한 꿀팁을 웬디 맥노튼의 그림들과 함께 만나보세요.
+요리를 잘 하지 못하는 사람들도,
+먹는 것을 좋아하는 사람이라면
+얼마든지 쉽게 시작할 수 있는 매력적인 요리책 &amp;lt;소금 지방 산 열&amp;gt; pic.</description>
     </item>
     
   </channel>

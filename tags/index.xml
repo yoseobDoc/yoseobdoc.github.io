@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on bibliotek Adriano</title>
-    <link>https://yoseodoc.github.io/tags/</link>
-    <description>Recent content in Tags on bibliotek Adriano</description>
+    <title>Tags on YoseobDoc</title>
+    <link>https://yoseobdoc.github.io/tags/</link>
+    <description>Recent content in Tags on YoseobDoc</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 May 2015 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://yoseodoc.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://yoseobdoc.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>cover image</title>
-      <link>https://yoseodoc.github.io/tags/cover-image/</link>
-      <pubDate>Wed, 13 May 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://yoseodoc.github.io/tags/cover-image/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>
