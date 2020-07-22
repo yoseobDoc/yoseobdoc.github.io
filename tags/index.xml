@@ -6,9 +6,19 @@
     <description>Recent content in Tags on bibliotek Adriano</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Wed, 13 May 2015 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://yoseodoc.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>cover image</title>
+      <link>https://yoseodoc.github.io/tags/cover-image/</link>
+      <pubDate>Wed, 13 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://yoseodoc.github.io/tags/cover-image/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>
