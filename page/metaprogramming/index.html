@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="Porco Rosso">
+<meta name="keywords" content="tech">
+<meta name="description" content="What do we mean by &ldquo;metaprogramming&rdquo;? Well, it was the best collective term we could come up with for the set of things that are more about process than they are about writing code or working more efficiently. In this lecture, we will look at systems for building and testing your code, and for managing dependencies. These may seem like they are of limited importance in your day-to-day as a student, but the moment you interact with a larger code base through an internship or once you enter the &ldquo;real world&rdquo;, you will see this everywhere.">
+
+
+<meta property="og:description" content="What do we mean by &ldquo;metaprogramming&rdquo;? Well, it was the best collective term we could come up with for the set of things that are more about process than they are about writing code or working more efficiently. In this lecture, we will look at systems for building and testing your code, and for managing dependencies. These may seem like they are of limited importance in your day-to-day as a student, but the moment you interact with a larger code base through an internship or once you enter the &ldquo;real world&rdquo;, you will see this everywhere.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Metaprogramming">
+<meta name="twitter:title" content="Metaprogramming">
+<meta property="og:url" content="https://yoseobdoc.github.io/page/metaprogramming/">
+<meta property="twitter:url" content="https://yoseobdoc.github.io/page/metaprogramming/">
+<meta property="og:site_name" content="YoseobDoc">
+<meta property="og:description" content="What do we mean by &ldquo;metaprogramming&rdquo;? Well, it was the best collective term we could come up with for the set of things that are more about process than they are about writing code or working more efficiently. In this lecture, we will look at systems for building and testing your code, and for managing dependencies. These may seem like they are of limited importance in your day-to-day as a student, but the moment you interact with a larger code base through an internship or once you enter the &ldquo;real world&rdquo;, you will see this everywhere.">
+<meta name="twitter:description" content="What do we mean by &ldquo;metaprogramming&rdquo;? Well, it was the best collective term we could come up with for the set of things that are more about process than they are about writing code or working more efficiently. In this lecture, we will look at systems for building and testing your code, and for managing dependencies. These may seem like they are of limited importance in your day-to-day as a student, but the moment you interact with a larger code base through an internship or once you enter the &ldquo;real world&rdquo;, you will see this everywhere.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2019-01-27T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2019-01-27T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Missing-Semester">
+    
+  
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@se6644">
+
+
+  <meta name="twitter:creator" content="@se6644">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=640">
+
+
+    <title>Metaprogramming</title>
+
+    <link rel="icon" href="https://yoseobdoc.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://yoseobdoc.github.io/page/metaprogramming/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://yoseobdoc.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-108668950-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="1">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://yoseobdoc.github.io/">YoseobDoc</a>
+  </div>
+  
+    
+      <a class="header-right-icon open-algolia-search"
+         href="https://yoseobdoc.github.io/#search">
+    
+    
+      <i class="fa fa-lg fa-search"></i>
+    
+    
+    </a>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  
+    window.addEventListener('load', (event) => {
+        document.querySelectorAll("mjx-container").forEach(function(x){
+          x.parentElement.classList += 'has-jax'})
+      });
+  
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</header>
+
+      <nav id="sidebar" data-behavior="1">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://yoseobdoc.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Porco Rosso</h4>
+        
+          <h5 class="sidebar-profile-bio">Porco treats himself to dinner at the Hotel Adriano, which is run by his friend Gina.</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/page">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">./missing-semester</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/yoseobDoc" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="1"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Metaprogramming
+    </h1>
+  
+  
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/_Ms1Z4xfqv4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>What do we mean by &ldquo;metaprogramming&rdquo;? Well, it was the best collective
+term we could come up with for the set of things that are more about
+<em>process</em> than they are about writing code or working more efficiently.
+In this lecture, we will look at systems for building and testing your
+code, and for managing dependencies. These may seem like they are of
+limited importance in your day-to-day as a student, but the moment you
+interact with a larger code base through an internship or once you enter
+the &ldquo;real world&rdquo;, you will see this everywhere. We should note that
+&ldquo;metaprogramming&rdquo; can also mean &ldquo;<a href="https://en.wikipedia.org/wiki/Metaprogramming">programs that operate on
+programs</a>&quot;, whereas that
+is not quite the definition we are using for the purposes of this
+lecture.</p>
+<h1 id="build-systems">Build systems</h1>
+<p>If you write a paper in LaTeX, what are the commands you need to run to
+produce your paper? What about the ones used to run your benchmarks,
+plot them, and then insert that plot into your paper? Or to compile the
+code provided in the class you&rsquo;re taking and then running the tests?</p>
+<p>For most projects, whether they contain code or not, there is a &ldquo;build
+process&rdquo;. Some sequence of operations you need to do to go from your
+inputs to your outputs. Often, that process might have many steps, and
+many branches. Run this to generate this plot, that to generate those
+results, and something else to produce the final paper. As with so many
+of the things we have seen in this class, you are not the first to
+encounter this annoyance, and luckily there exist many tools to help
+you!</p>
+<p>These are usually called &ldquo;build systems&rdquo;, and there are <em>many</em> of them.
+Which one you use depends on the task at hand, your language of
+preference, and the size of the project. At their core, they are all
+very similar though. You define a number of <em>dependencies</em>, a number of
+<em>targets</em>, and <em>rules</em> for going from one to the other. You tell the
+build system that you want a particular target, and its job is to find
+all the transitive dependencies of that target, and then apply the rules
+to produce intermediate targets all the way until the final target has
+been produced. Ideally, the build system does this without unnecessarily
+executing rules for targets whose dependencies haven&rsquo;t changed and where
+the result is available from a previous build.</p>
+<p><code>make</code> is one of the most common build systems out there, and you will
+usually find it installed on pretty much any UNIX-based computer. It has
+its warts, but works quite well for simple-to-moderate projects. When
+you run <code>make</code>, it consults a file called <code>Makefile</code> in the current
+directory. All the targets, their dependencies, and the rules are
+defined in that file. Let&rsquo;s take a look at one:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-make" data-lang="make"><span style="color:#a6e22e">paper.pdf</span><span style="color:#f92672">:</span> paper.tex plot-data.png
+	pdflatex paper.tex
+
+<span style="color:#a6e22e">plot-%.png</span><span style="color:#f92672">:</span> %.dat plot.py
+	./plot.py -i $*.dat -o $@
+</code></pre></div><p>Each directive in this file is a rule for how to produce the left-hand
+side using the right-hand side. Or, phrased differently, the things
+named on the right-hand side are dependencies, and the left-hand side is
+the target. The indented block is a sequence of programs to produce the
+target from those dependencies. In <code>make</code>, the first directive also
+defines the default goal. If you run <code>make</code> with no arguments, this is
+the target it will build. Alternatively, you can run something like
+<code>make plot-data.png</code>, and it will build that target instead.</p>
+<p>The <code>%</code> in a rule is a &ldquo;pattern&rdquo;, and will match the same string on the
+left and on the right. For example, if the target <code>plot-foo.png</code> is
+requested, <code>make</code> will look for the dependencies <code>foo.dat</code> and
+<code>plot.py</code>. Now let&rsquo;s look at what happens if we run <code>make</code> with an empty
+source directory.</p>
+<pre><code class="language-console" data-lang="console">$ make
+make: *** No rule to make target 'paper.tex', needed by 'paper.pdf'.  Stop.
+</code></pre><p><code>make</code> is helpfully telling us that in order to build <code>paper.pdf</code>, it
+needs <code>paper.tex</code>, and it has no rule telling it how to make that file.
+Let&rsquo;s try making it!</p>
+<pre><code class="language-console" data-lang="console">$ touch paper.tex
+$ make
+make: *** No rule to make target 'plot-data.png', needed by 'paper.pdf'.  Stop.
+</code></pre><p>Hmm, interesting, there <em>is</em> a rule to make <code>plot-data.png</code>, but it is a
+pattern rule. Since the source files do not exist (<code>foo.dat</code>), <code>make</code>
+simply states that it cannot make that file. Let&rsquo;s try creating all the
+files:</p>
+<pre><code class="language-console" data-lang="console">$ cat paper.tex
+\documentclass{article}
+\usepackage{graphicx}
+\begin{document}
+\includegraphics[scale=0.65]{plot-data.png}
+\end{document}
+$ cat plot.py
+#!/usr/bin/env python
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-i', type=argparse.FileType('r'))
+parser.add_argument('-o')
+args = parser.parse_args()
+
+data = np.loadtxt(args.i)
+plt.plot(data[:, 0], data[:, 1])
+plt.savefig(args.o)
+$ cat data.dat
+1 1
+2 2
+3 3
+4 4
+5 8
+</code></pre><p>Now what happens if we run <code>make</code>?</p>
+<pre><code class="language-console" data-lang="console">$ make
+./plot.py -i data.dat -o plot-data.png
+pdflatex paper.tex
+... lots of output ...
+</code></pre><p>And look, it made a PDF for us!
+What if we run <code>make</code> again?</p>
+<pre><code class="language-console" data-lang="console">$ make
+make: 'paper.pdf' is up to date.
+</code></pre><p>It didn&rsquo;t do anything! Why not? Well, because it didn&rsquo;t need to. It
+checked that all of the previously-built targets were still up to date
+with respect to their listed dependencies. We can test this by modifying
+<code>paper.tex</code> and then re-running <code>make</code>:</p>
+<pre><code class="language-console" data-lang="console">$ vim paper.tex
+$ make
+pdflatex paper.tex
+...
+</code></pre><p>Notice that <code>make</code> did <em>not</em> re-run <code>plot.py</code> because that was not
+necessary; none of <code>plot-data.png</code>'s dependencies changed!</p>
+<h1 id="dependency-management">Dependency management</h1>
+<p>At a more macro level, your software projects are likely to have
+dependencies that are themselves projects. You might depend on installed
+programs (like <code>python</code>), system packages (like <code>openssl</code>), or libraries
+within your programming language (like <code>matplotlib</code>). These days, most
+dependencies will be available through a <em>repository</em> that hosts a
+large number of such dependencies in a single place, and provides a
+convenient mechanism for installing them. Some examples include the
+Ubuntu package repositories for Ubuntu system packages, which you access
+through the <code>apt</code> tool, RubyGems for Ruby libraries, PyPi for Python
+libraries, or the Arch User Repository for Arch Linux user-contributed
+packages.</p>
+<p>Since the exact mechanisms for interacting with these repositories vary
+a lot from repository to repository and from tool to tool, we won&rsquo;t go
+too much into the details of any specific one in this lecture. What we
+<em>will</em> cover is some of the common terminology they all use. The first
+among these is <em>versioning</em>. Most projects that other projects depend on
+issue a <em>version number</em> with every release. Usually something like
+8.1.3 or 64.1.20192004. They are often, but not always, numerical.
+Version numbers serve many purposes, and one of the most important of
+them is to ensure that software keeps working. Imagine, for example,
+that I release a new version of my library where I have renamed a
+particular function. If someone tried to build some software that
+depends on my library after I release that update, the build might fail
+because it calls a function that no longer exists! Versioning attempts
+to solve this problem by letting a project say that it depends on a
+particular version, or range of versions, of some other project. That
+way, even if the underlying library changes, dependent software
+continues building by using an older version of my library.</p>
+<p>That also isn&rsquo;t ideal though! What if I issue a security update which
+does <em>not</em> change the public interface of my library (its &ldquo;API&rdquo;), and
+which any project that depended on the old version should immediately
+start using? This is where the different groups of numbers in a version
+come in. The exact meaning of each one varies between projects, but one
+relatively common standard is <a href="https://semver.org/"><em>semantic
+versioning</em></a>. With semantic versioning, every
+version number is of the form: major.minor.patch. The rules are:</p>
+<ul>
+<li>If a new release does not change the API, increase the patch version.</li>
+<li>If you <em>add</em> to your API in a backwards-compatible way, increase the
+minor version.</li>
+<li>If you change the API in a non-backwards-compatible way, increase the
+major version.</li>
+</ul>
+<p>This already provides some major advantages. Now, if my project depends
+on your project, it <em>should</em> be safe to use the latest release with the
+same major version as the one I built against when I developed it, as
+long as its minor version is at least what it was back then. In other
+words, if I depend on your library at version <code>1.3.7</code>, then it <em>should</em>
+be fine to build it with <code>1.3.8</code>, <code>1.6.1</code>, or even <code>1.3.0</code>. Version
+<code>2.2.4</code> would probably not be okay, because the major version was
+increased. We can see an example of semantic versioning in Python&rsquo;s
+version numbers. Many of you are probably aware that Python 2 and Python
+3 code do not mix very well, which is why that was a <em>major</em> version
+bump. Similarly, code written for Python 3.5 might run fine on Python
+3.7, but possibly not on 3.4.</p>
+<p>When working with dependency management systems, you may also come
+across the notion of <em>lock files</em>. A lock file is simply a file that
+lists the exact version you are <em>currently</em> depending on of each
+dependency. Usually, you need to explicitly run an update program to
+upgrade to newer versions of your dependencies. There are many reasons
+for this, such as avoiding unnecessary recompiles, having reproducible
+builds, or not automatically updating to the latest version (which may
+be broken). An extreme version of this kind of dependency locking is
+<em>vendoring</em>, which is where you copy all the code of your dependencies
+into your own project. That gives you total control over any changes to
+it, and lets you introduce your own changes to it, but also means you
+have to explicitly pull in any updates from the upstream maintainers
+over time.</p>
+<h1 id="continuous-integration-systems">Continuous integration systems</h1>
+<p>As you work on larger and larger projects, you&rsquo;ll find that there are
+often additional tasks you have to do whenever you make a change to it.
+You might have to upload a new version of the documentation, upload a
+compiled version somewhere, release the code to pypi, run your test
+suite, and all sort of other things. Maybe every time someone sends you
+a pull request on GitHub, you want their code to be style checked and
+you want some benchmarks to run? When these kinds of needs arise, it&rsquo;s
+time to take a look at continuous integration.</p>
+<p>Continuous integration, or CI, is an umbrella term for &ldquo;stuff that runs
+whenever your code changes&rdquo;, and there are many companies out there that
+provide various types of CI, often for free for open-source projects.
+Some of the big ones are Travis CI, Azure Pipelines, and GitHub Actions.
+They all work in roughly the same way: you add a file to your repository
+that describes what should happen when various things happen to that
+repository. By far the most common one is a rule like &ldquo;when someone
+pushes code, run the test suite&rdquo;. When the event triggers, the CI
+provider spins up a virtual machines (or more), runs the commands in
+your &ldquo;recipe&rdquo;, and then usually notes down the results somewhere. You
+might set it up so that you are notified if the test suite stops
+passing, or so that a little badge appears on your repository as long as
+the tests pass.</p>
+<p>As an example of a CI system, the class website is set up using GitHub
+Pages. Pages is a CI action that runs the Jekyll blog software on every
+push to <code>master</code> and makes the built site available on a particular
+GitHub domain. This makes it trivial for us to update the website! We
+just make our changes locally, commit them with git, and then push. CI
+takes care of the rest.</p>
+<h2 id="a-brief-aside-on-testing">A brief aside on testing</h2>
+<p>Most large software projects come with a &ldquo;test suite&rdquo;. You may already
+be familiar with the general concept of testing, but we thought we&rsquo;d
+quickly mention some approaches to testing and testing terminology that
+you may encounter in the wild:</p>
+<ul>
+<li>Test suite: a collective term for all the tests</li>
+<li>Unit test: a &ldquo;micro-test&rdquo; that tests a specific feature in isolation</li>
+<li>Integration test: a &ldquo;macro-test&rdquo; that runs a larger part of the
+system to check that different feature or components work <em>together</em>.</li>
+<li>Regression test: a test that implements a particular pattern that
+<em>previously</em> caused a bug to ensure that the bug does not resurface.</li>
+<li>Mocking: to replace a function, module, or type with a fake
+implementation to avoid testing unrelated functionality. For example,
+you might &ldquo;mock the network&rdquo; or &ldquo;mock the disk&rdquo;.</li>
+</ul>
+<h1 id="exercises">Exercises</h1>
+<ol>
+<li>Most makefiles provide a target called <code>clean</code>. This isn&rsquo;t intended
+to produce a file called <code>clean</code>, but instead to clean up any files
+that can be re-built by make. Think of it as a way to &ldquo;undo&rdquo; all of
+the build steps. Implement a <code>clean</code> target for the <code>paper.pdf</code>
+<code>Makefile</code> above. You will have to make the target
+<a href="https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html">phony</a>.
+You may find the <a href="https://git-scm.com/docs/git-ls-files"><code>git ls-files</code></a> subcommand useful.
+A number of other very common make targets are listed
+<a href="https://www.gnu.org/software/make/manual/html_node/Standard-Targets.html#Standard-Targets">here</a>.</li>
+<li>Take a look at the various ways to specify version requirements for
+dependencies in <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html">Rust&rsquo;s build
+system</a>.
+Most package repositories support similar syntax. For each one
+(caret, tilde, wildcard, comparison, and multiple), try to come up
+with a use-case in which that particular kind of requirement makes
+sense.</li>
+<li>Git can act as a simple CI system all by itself. In <code>.git/hooks</code>
+inside any git repository, you will find (currently inactive) files
+that are run as scripts when a particular action happens. Write a
+<a href="https://git-scm.com/docs/githooks#_pre_commit"><code>pre-commit</code></a> hook
+that runs <code>make paper.pdf</code> and refuses the commit if the <code>make</code>
+command fails. This should prevent any commit from having an
+unbuildable version of the paper.</li>
+<li>Set up a simple auto-published page using <a href="https://pages.github.com/">GitHub
+Pages</a>.
+Add a <a href="https://github.com/features/actions">GitHub Action</a> to the
+repository to run <code>shellcheck</code> on any shell files in that
+repository (here is <a href="https://github.com/marketplace/actions/shellcheck">one way to do
+it</a>). Check that
+it works!</li>
+<li><a href="https://help.github.com/en/actions/automating-your-workflow-with-github-actions/building-actions">Build your
+own</a>
+GitHub action to run <a href="http://proselint.com/"><code>proselint</code></a> or
+<a href="https://github.com/btford/write-good"><code>write-good</code></a> on all the
+<code>.md</code> files in the repository. Enable it in your repository, and
+check that it works by filing a pull request with a typo in it.</li>
+</ol>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+            
+            <div class="post-actions-wrap">
+  
+</div>
+     
+
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Porco Rosso. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        <div class="post-actions-wrap">
+  
+</div>
+     
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="1">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/se6644%25!%28EXTRA%20string=https%3A%2F%2Fyoseobdoc.github.io%2Fpage%2Fmetaprogramming%2F%29">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Porco Rosso</h4>
+    
+      <div id="about-card-bio">Porco treats himself to dinner at the Hotel Adriano, which is run by his friend Gina.</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        an Italian World War I fighter ace and freelance bounty hunter
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Adriatic Sea
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('http://user-images.githubusercontent.com/33090364/88197328-981a7500-cc42-11ea-855f-600fead66a4a.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://yoseobdoc.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+
+
+
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="Porco Rosso">
+<meta name="keywords" content="tech">
+<meta name="description" content="Motivation As computer scientists, we know that computers are great at aiding in repetitive tasks. However, far too often, we forget that this applies just as much to our use of the computer as it does to the computations we want our programs to perform. We have a vast range of tools available at our fingertips that enable us to be more productive and solve more complex problems when working on any computer-related problem.">
+
+
+<meta property="og:description" content="Motivation As computer scientists, we know that computers are great at aiding in repetitive tasks. However, far too often, we forget that this applies just as much to our use of the computer as it does to the computations we want our programs to perform. We have a vast range of tools available at our fingertips that enable us to be more productive and solve more complex problems when working on any computer-related problem.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Course overview &#43; the shell">
+<meta name="twitter:title" content="Course overview &#43; the shell">
+<meta property="og:url" content="https://yoseobdoc.github.io/page/course-shell/">
+<meta property="twitter:url" content="https://yoseobdoc.github.io/page/course-shell/">
+<meta property="og:site_name" content="YoseobDoc">
+<meta property="og:description" content="Motivation As computer scientists, we know that computers are great at aiding in repetitive tasks. However, far too often, we forget that this applies just as much to our use of the computer as it does to the computations we want our programs to perform. We have a vast range of tools available at our fingertips that enable us to be more productive and solve more complex problems when working on any computer-related problem.">
+<meta name="twitter:description" content="Motivation As computer scientists, we know that computers are great at aiding in repetitive tasks. However, far too often, we forget that this applies just as much to our use of the computer as it does to the computations we want our programs to perform. We have a vast range of tools available at our fingertips that enable us to be more productive and solve more complex problems when working on any computer-related problem.">
+<meta property="og:locale" content="en-us">
+
+  
+  
+  
+  
+    
+      <meta property="article:section" content="Missing-Semester">
+    
+  
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@se6644">
+
+
+  <meta name="twitter:creator" content="@se6644">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=640">
+
+
+    <title>Course overview &#43; the shell</title>
+
+    <link rel="icon" href="https://yoseobdoc.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://yoseobdoc.github.io/page/course-shell/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://yoseobdoc.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-108668950-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="1">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://yoseobdoc.github.io/">YoseobDoc</a>
+  </div>
+  
+    
+      <a class="header-right-icon open-algolia-search"
+         href="https://yoseobdoc.github.io/#search">
+    
+    
+      <i class="fa fa-lg fa-search"></i>
+    
+    
+    </a>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  
+    window.addEventListener('load', (event) => {
+        document.querySelectorAll("mjx-container").forEach(function(x){
+          x.parentElement.classList += 'has-jax'})
+      });
+  
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</header>
+
+      <nav id="sidebar" data-behavior="1">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://yoseobdoc.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Porco Rosso</h4>
+        
+          <h5 class="sidebar-profile-bio">Porco treats himself to dinner at the Hotel Adriano, which is run by his friend Gina.</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/page">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">./missing-semester</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/yoseobDoc" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="1"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Course overview &#43; the shell
+    </h1>
+  
+  
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/Z56Jmr9Z34Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<h1 id="motivation">Motivation</h1>
+<p>As computer scientists, we know that computers are great at aiding in
+repetitive tasks. However, far too often, we forget that this applies
+just as much to our <em>use</em> of the computer as it does to the computations
+we want our programs to perform. We have a vast range of tools
+available at our fingertips that enable us to be more productive and
+solve more complex problems when working on any computer-related
+problem. Yet many of us utilize only a small fraction of those tools; we
+only know enough magical incantations by rote to get by, and blindly
+copy-paste commands from the internet when we get stuck.</p>
+<p>This class is an attempt to address this.</p>
+<p>We want to teach you how to make the most of the tools you know, show
+you new tools to add to your toolbox, and hopefully instill in you some
+excitement for exploring (and perhaps building) more tools on your own.
+This is what we believe to be the missing semester from most Computer
+Science curricula.</p>
+<h1 id="class-structure">Class structure</h1>
+<p>The class consists of 11 1-hour lectures, each one centering on a
+<a href="https://yoseobdoc.github.io/2020/">particular topic</a>. The lectures are largely independent,
+though as the semester goes on we will presume that you are familiar
+with the content from the earlier lectures. We have lecture notes
+online, but there will be a lot of content covered in class (e.g. in the
+form of demos) that may not be in the notes. We will be recording
+lectures and posting the recordings online.</p>
+<p>We are trying to cover a lot of ground over the course of just 11 1-hour
+lectures, so the lectures are fairly dense. To allow you some time to
+get familiar with the content at your own pace, each lecture includes a
+set of exercises that guide you through the lecture&rsquo;s key points. After
+each lecture, we are hosting office hours where we will be present to
+help answer any questions you might have. If you are attending the class
+online, you can send us questions at
+<a href="mailto:missing-semester@mit.edu">missing-semester@mit.edu</a>.</p>
+<p>Due to the limited time we have, we won&rsquo;t be able to cover all the tools
+in the same level of detail a full-scale class might. Where possible, we
+will try to point you towards resources for digging further into a tool
+or topic, but if something particularly strikes your fancy, don&rsquo;t
+hesitate to reach out to us and ask for pointers!</p>
+<h1 id="topic-1-the-shell">Topic 1: The Shell</h1>
+<h2 id="what-is-the-shell">What is the shell?</h2>
+<p>Computers these days have a variety of interfaces for giving them
+commands; fancyful graphical user interfaces, voice interfaces, and
+even AR/VR are everywhere. These are great for 80% of use-cases, but
+they are often fundamentally restricted in what they allow you to do —
+you cannot press a button that isn&rsquo;t there or give a voice command that
+hasn&rsquo;t been programmed. To take full advantage of the tools your
+computer provides, we have to go old-school and drop down to a textual
+interface: The Shell.</p>
+<p>Nearly all platforms you can get your hand on has a shell in one form or
+another, and many of them have several shells for you to choose from.
+While they may vary in the details, at their core they are all roughly
+the same: they allow you to run programs, give them input, and inspect
+their output in a semi-structured way.</p>
+<p>In this lecture, we will focus on the Bourne Again SHell, or &ldquo;bash&rdquo; for
+short. This is one of the most widely used shells, and its syntax is
+similar to what you will see in many other shells. To open a shell
+<em>prompt</em> (where you can type commands), you first need a <em>terminal</em>.
+Your device probably shipped with one installed, or you can install one
+fairly easily.</p>
+<h2 id="using-the-shell">Using the shell</h2>
+<p>When you launch your terminal, you will see a <em>prompt</em> that often looks
+a little like this:</p>
+<pre><code class="language-console" data-lang="console">missing:~$ 
+</code></pre><p>This is the main textual interface to the shell. It tells you that you
+are on the machine <code>missing</code> and that your &ldquo;current working directory&rdquo;,
+or where you currently are, is <code>~</code> (short for &ldquo;home&rdquo;). The <code>$</code> tells you
+that you are not the root user (more on that later). At this prompt you
+can type a <em>command</em>, which will then be interpreted by the shell. The
+most basic command is to execute a program:</p>
+<pre><code class="language-console" data-lang="console">missing:~$ date
+Fri 10 Jan 2020 11:49:31 AM EST
+missing:~$ 
+</code></pre><p>Here, we executed the <code>date</code> program, which (perhaps unsurprisingly)
+prints the current date and time. The shell then asks us for another
+command to execute. We can also execute a command with <em>arguments</em>:</p>
+<pre><code class="language-console" data-lang="console">missing:~$ echo hello
+hello
+</code></pre><p>In this case, we told the shell to execute the program <code>echo</code> with the
+argument <code>hello</code>. The <code>echo</code> program simply prints out its arguments.
+The shell parses the command by splitting it by whitespace, and then
+runs the program indicated by the first word, supplying each subsequent
+word as an argument that the program can access. If you want to provide
+an argument that contains spaces or other special characters (e.g., a
+directory named &ldquo;My Photos&rdquo;), you can either quote the argument with <code>'</code>
+or <code>&quot;</code> (<code>&quot;My Photos&quot;</code>), or escape just the relevant characters with <code>\</code>
+(<code>My\ Photos</code>).</p>
+<p>But how does the shell know how to find the <code>date</code> or <code>echo</code> programs?
+Well, the shell is a programming environment, just like Python or Ruby,
+and so it has variables, conditionals, loops, and functions (next
+lecture!). When you run commands in your shell, you are really writing a
+small bit of code that your shell interprets. If the shell is asked to
+execute a command that doesn&rsquo;t match one of its programming keywords, it
+consults an <em>environment variable</em> called <code>$PATH</code> that lists which
+directories the shell should search for programs when it is given a
+command:</p>
+<pre><code class="language-console" data-lang="console">missing:~$ echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+missing:~$ which echo
+/bin/echo
+missing:~$ /bin/echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+</code></pre><p>When we run the <code>echo</code> command, the shell sees that it should execute
+the program <code>echo</code>, and then searches through the <code>:</code>-separated list of
+directories in <code>$PATH</code> for a file by that name. When it finds it, it
+runs it (assuming the file is <em>executable</em>; more on that later). We can
+find out which file is executed for a given program name using the
+<code>which</code> program. We can also bypass <code>$PATH</code> entirely by giving the
+<em>path</em> to the file we want to execute.</p>
+<h2 id="navigating-in-the-shell">Navigating in the shell</h2>
+<p>A path on the shell is a delimited list of directories; separated by <code>/</code>
+on Linux and macOS and <code>\</code> on Windows. On Linux and macOS, the path <code>/</code>
+is the &ldquo;root&rdquo; of the file system, under which all directories and files
+lie, whereas on Windows there is one root for each disk partition (e.g.,
+<code>C:\</code>). We will generally assume that you are using a Linux filesystem
+in this class. A path that starts with <code>/</code> is called an <em>absolute</em> path.
+Any other path is a <em>relative</em> path. Relative paths are relative to the
+current working directory, which we can see with the <code>pwd</code> command and
+change with the <code>cd</code> command. In a path, <code>.</code> refers to the current
+directory, and <code>..</code> to its parent directory:</p>
+<pre><code class="language-console" data-lang="console">missing:~$ pwd
+/home/missing
+missing:~$ cd /home
+missing:/home$ pwd
+/home
+missing:/home$ cd ..
+missing:/$ pwd
+/
+missing:/$ cd ./home
+missing:/home$ pwd
+/home
+missing:/home$ cd missing
+missing:~$ pwd
+/home/missing
+missing:~$ ../../bin/echo hello
+hello
+</code></pre><p>Notice that our shell prompt kept us informed about what our current
+working directory was. You can configure your prompt to show you all
+sorts of useful information, which we will cover in a later lecture.</p>
+<p>In general, when we run a program, it will operate in the current
+directory unless we tell it otherwise. For example, it will usually
+search for files there, and create new files there if it needs to.</p>
+<p>To see what lives in a given directory, we use the <code>ls</code> command:</p>
+<pre><code class="language-console" data-lang="console">missing:~$ ls
+missing:~$ cd ..
+missing:/home$ ls
+missing
+missing:/home$ cd ..
+missing:/$ ls
+bin
+boot
+dev
+etc
+home
+...
+</code></pre><p>Unless a directory is given as its first argument, <code>ls</code> will print the
+contents of the current directory. Most commands accept flags and
+options (flags with values) that start with <code>-</code> to modify their
+behavior. Usually, running a program with the <code>-h</code> or <code>--help</code> flag
+(<code>/?</code> on Windows) will print some help text that tells you what flags
+and options are available. For example, <code>ls --help</code> tells us:</p>
+<pre><code>  -l                         use a long listing format
+</code></pre><pre><code class="language-console" data-lang="console">missing:~$ ls -l /home
+drwxr-xr-x 1 missing  users  4096 Jun 15  2019 missing
+</code></pre><p>This gives us a bunch more information about each file or directory
+present. First, the <code>d</code> at the beginning of the line tells us that
+<code>missing</code> is a directory. Then follow three groups of three characters
+(<code>rwx</code>). These indicate what permissions the owner of the file
+(<code>missing</code>), the owning group (<code>users</code>), and everyone else respectively
+have on the relevant item. A <code>-</code> indicates that the given principal does
+not have the given permission. Above, only the owner is allowed to
+modify (<code>w</code>) the <code>missing</code> directory (i.e., add/remove files in it). To
+enter a directory, a user must have &ldquo;search&rdquo; (represented by &ldquo;execute&rdquo;:
+<code>x</code>) permissions on that directory (and its parents). To list its
+contents, a user must have read (<code>r</code>) permissions on that directory. For
+files, the permissions are as you would expect. Notice that nearly all
+the files in <code>/bin</code> have the <code>x</code> permission set for the last group,
+&ldquo;everyone else&rdquo;, so that anyone can execute those programs.</p>
+<p>Some other handy programs to know about at this point are <code>mv</code> (to
+rename/move a file), <code>cp</code> (to copy a file), and <code>mkdir</code> (to make a new
+directory).</p>
+<p>If you ever want <em>more</em> information about a program&rsquo;s arguments, inputs,
+outputs, or how it works in general, give the <code>man</code> program a try. It
+takes as an argument the name of a program, and shows you its <em>manual
+page</em>. Press <code>q</code> to exit.</p>
+<pre><code class="language-console" data-lang="console">missing:~$ man ls
+</code></pre><h2 id="connecting-programs">Connecting programs</h2>
+<p>In the shell, programs have two primary &ldquo;streams&rdquo; associated with them:
+their input stream and their output stream. When the program tries to
+read input, it reads from the input stream, and when it prints
+something, it prints to its output stream. Normally, a program&rsquo;s input
+and output are both your terminal. That is, your keyboard as input and
+your screen as output. However, we can also rewire those streams!</p>
+<p>The simplest form of redirection is <code>&lt; file</code> and <code>&gt; file</code>. These let you
+rewire the input and output streams of a program to a file respectively:</p>
+<pre><code class="language-console" data-lang="console">missing:~$ echo hello &gt; hello.txt
+missing:~$ cat hello.txt
+hello
+missing:~$ cat &lt; hello.txt
+hello
+missing:~$ cat &lt; hello.txt &gt; hello2.txt
+missing:~$ cat hello2.txt
+hello
+</code></pre><p>You can also use <code>&gt;&gt;</code> to append to a file. Where this kind of
+input/output redirection really shines is in the use of <em>pipes</em>. The <code>|</code>
+operator lets you &ldquo;chain&rdquo; programs such that the output of one is the
+input of another:</p>
+<pre><code class="language-console" data-lang="console">missing:~$ ls -l / | tail -n1
+drwxr-xr-x 1 root  root  4096 Jun 20  2019 var
+missing:~$ curl --head --silent google.com | grep --ignore-case content-length | cut --delimiter=' ' -f2
+219
+</code></pre><p>We will go into a lot more detail about how to take advantage of pipes
+in the lecture on data wrangling.</p>
+<h2 id="a-versatile-and-powerful-tool">A versatile and powerful tool</h2>
+<p>On most Unix-like systems, one user is special: the &ldquo;root&rdquo; user. You may
+have seen it in the file listings above. The root user is above (almost)
+all access restrictions, and can create, read, update, and delete any
+file in the system. You will not usually log into your system as the
+root user though, since it&rsquo;s too easy to accidentally break something.
+Instead, you will be using the <code>sudo</code> command. As its name implies, it
+lets you &ldquo;do&rdquo; something &ldquo;as su&rdquo; (short for &ldquo;super user&rdquo;, or &ldquo;root&rdquo;).
+When you get permission denied errors, it is usually because you need to
+do something as root. Though make sure you first double-check that you
+really wanted to do it that way!</p>
+<p>One thing you need to be root in order to do is writing to the <code>sysfs</code> file
+system mounted under <code>/sys</code>. <code>sysfs</code> exposes a number of kernel parameters as
+files, so that you can easily reconfigure the kernel on the fly without
+specialized tools. <strong>Note that sysfs does not exist on Windows or macOS.</strong></p>
+<p>For example, the brightness of your laptop&rsquo;s screen is exposed through a file
+called <code>brightness</code> under</p>
+<pre><code>/sys/class/backlight
+</code></pre><p>By writing a value into that file, we can change the screen brightness.
+Your first instinct might be to do something like:</p>
+<pre><code class="language-console" data-lang="console">$ sudo find -L /sys/class/backlight -maxdepth 2 -name '*brightness*'
+/sys/class/backlight/thinkpad_screen/brightness
+$ cd /sys/class/backlight/thinkpad_screen
+$ sudo echo 3 &gt; brightness
+An error occurred while redirecting file 'brightness'
+open: Permission denied
+</code></pre><p>This error may come as a surprise. After all, we ran the command with
+<code>sudo</code>! This is an important thing to know about the shell. Operations
+like <code>|</code>, <code>&gt;</code>, and <code>&lt;</code> are done <em>by the shell</em>, not by the individual
+program. <code>echo</code> and friends do not &ldquo;know&rdquo; about <code>|</code>. They just read from
+their input and write to their output, whatever it may be. In the case
+above, the <em>shell</em> (which is authenticated just as your user) tries to
+open the brightness file for writing, before setting that as <code>sudo echo</code>'s output, but is prevented from doing so since the shell does not
+run as root. Using this knowledge, we can work around this:</p>
+<pre><code class="language-console" data-lang="console">$ echo 3 | sudo tee brightness
+</code></pre><p>Since the <code>tee</code> program is the one to open the <code>/sys</code> file for writing,
+and <em>it</em> is running as <code>root</code>, the permissions all work out. You can
+control all sorts of fun and useful things through <code>/sys</code>, such as the
+state of various system LEDs (your path might be different):</p>
+<pre><code class="language-console" data-lang="console">$ echo 1 | sudo tee /sys/class/leds/input6::scrolllock/brightness
+</code></pre><h1 id="next-steps">Next steps</h1>
+<p>At this point you know your way around a shell enough to accomplish
+basic tasks. You should be able to navigate around to find files of
+interest and use the basic functionality of most programs. In the next
+lecture, we will talk about how to perform and automate more complex
+tasks using the shell and the many handy command-line programs out
+there.</p>
+<h1 id="exercises">Exercises</h1>
+<ol>
+<li>Create a new directory called <code>missing</code> under <code>/tmp</code>.</li>
+<li>Look up the <code>touch</code> program. The <code>man</code> program is your friend.</li>
+<li>Use <code>touch</code> to create a new file called <code>semester</code> in <code>missing</code>.</li>
+<li>Write the following into that file, one line at a time:
+<pre><code>#!/bin/sh
+curl --head --silent https://missing.csail.mit.edu
+</code></pre><p>The first line might be tricky to get working. It&rsquo;s helpful to know that
+<code>#</code> starts a comment in Bash, and <code>!</code> has a special meaning even within
+double-quoted (<code>&quot;</code>) strings. Bash treats single-quoted strings (<code>'</code>)
+differently: they will do the trick in this case. See the Bash
+<a href="https://www.gnu.org/software/bash/manual/html_node/Quoting.html">quoting</a>
+manual page for more information.</p>
+</li>
+<li>Try to execute the file, i.e. type the path to the script (<code>./semester</code>)
+into your shell and press enter. Understand why it doesn&rsquo;t work by
+consulting the output of <code>ls</code> (hint: look at the permission bits of the
+file).</li>
+<li>Run the command by explicitly starting the <code>sh</code> interpreter, and giving it
+the file <code>semester</code> as the first argument, i.e. <code>sh semester</code>. Why does
+this work, while <code>./semester</code> didn&rsquo;t?</li>
+<li>Look up the <code>chmod</code> program (e.g. use <code>man chmod</code>).</li>
+<li>Use <code>chmod</code> to make it possible to run the command <code>./semester</code> rather than
+having to type <code>sh semester</code>. How does your shell know that the file is
+supposed to be interpreted using <code>sh</code>? See this page on the
+<a href="https://en.wikipedia.org/wiki/Shebang_(Unix)">shebang</a> line for more
+information.</li>
+<li>Use <code>|</code> and <code>&gt;</code> to write the &ldquo;last modified&rdquo; date output by
+<code>semester</code> into a file called <code>last-modified.txt</code> in your home
+directory.</li>
+<li>Write a command that reads out your laptop battery&rsquo;s power level or your
+desktop machine&rsquo;s CPU temperature from <code>/sys</code>. Note: if you&rsquo;re a macOS
+user, your OS doesn&rsquo;t have sysfs, so you can skip this exercise.</li>
+</ol>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+            
+            <div class="post-actions-wrap">
+  
+</div>
+     
+
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Porco Rosso. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        <div class="post-actions-wrap">
+  
+</div>
+     
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="1">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/se6644%25!%28EXTRA%20string=https%3A%2F%2Fyoseobdoc.github.io%2Fpage%2Fcourse-shell%2F%29">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Porco Rosso</h4>
+    
+      <div id="about-card-bio">Porco treats himself to dinner at the Hotel Adriano, which is run by his friend Gina.</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        an Italian World War I fighter ace and freelance bounty hunter
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Adriatic Sea
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('http://user-images.githubusercontent.com/33090364/88197328-981a7500-cc42-11ea-855f-600fead66a4a.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://yoseobdoc.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+
+
+
+
+    
+  </body>
+</html>
+

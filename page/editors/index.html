@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="Porco Rosso">
+<meta name="keywords" content="tech">
+<meta name="description" content="Writing English words and writing code are very different activities. When programming, you spend more time switching files, reading, navigating, and editing code compared to writing a long stream. It makes sense that there are different types of programs for writing English words versus code (e.g. Microsoft Word versus Visual Studio Code).
+As programmers, we spend most of our time editing code, so it&rsquo;s worth investing time mastering an editor that fits your needs.">
+
+
+<meta property="og:description" content="Writing English words and writing code are very different activities. When programming, you spend more time switching files, reading, navigating, and editing code compared to writing a long stream. It makes sense that there are different types of programs for writing English words versus code (e.g. Microsoft Word versus Visual Studio Code).
+As programmers, we spend most of our time editing code, so it&rsquo;s worth investing time mastering an editor that fits your needs.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Editors (Vim)">
+<meta name="twitter:title" content="Editors (Vim)">
+<meta property="og:url" content="https://yoseobdoc.github.io/page/editors/">
+<meta property="twitter:url" content="https://yoseobdoc.github.io/page/editors/">
+<meta property="og:site_name" content="YoseobDoc">
+<meta property="og:description" content="Writing English words and writing code are very different activities. When programming, you spend more time switching files, reading, navigating, and editing code compared to writing a long stream. It makes sense that there are different types of programs for writing English words versus code (e.g. Microsoft Word versus Visual Studio Code).
+As programmers, we spend most of our time editing code, so it&rsquo;s worth investing time mastering an editor that fits your needs.">
+<meta name="twitter:description" content="Writing English words and writing code are very different activities. When programming, you spend more time switching files, reading, navigating, and editing code compared to writing a long stream. It makes sense that there are different types of programs for writing English words versus code (e.g. Microsoft Word versus Visual Studio Code).
+As programmers, we spend most of our time editing code, so it&rsquo;s worth investing time mastering an editor that fits your needs.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2019-01-15T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2019-01-15T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Missing-Semester">
+    
+  
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@se6644">
+
+
+  <meta name="twitter:creator" content="@se6644">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=640">
+
+
+    <title>Editors (Vim)</title>
+
+    <link rel="icon" href="https://yoseobdoc.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://yoseobdoc.github.io/page/editors/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://yoseobdoc.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-108668950-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="1">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://yoseobdoc.github.io/">YoseobDoc</a>
+  </div>
+  
+    
+      <a class="header-right-icon open-algolia-search"
+         href="https://yoseobdoc.github.io/#search">
+    
+    
+      <i class="fa fa-lg fa-search"></i>
+    
+    
+    </a>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  
+    window.addEventListener('load', (event) => {
+        document.querySelectorAll("mjx-container").forEach(function(x){
+          x.parentElement.classList += 'has-jax'})
+      });
+  
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</header>
+
+      <nav id="sidebar" data-behavior="1">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://yoseobdoc.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Porco Rosso</h4>
+        
+          <h5 class="sidebar-profile-bio">Porco treats himself to dinner at the Hotel Adriano, which is run by his friend Gina.</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/page">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">./missing-semester</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/yoseobDoc" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="1"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Editors (Vim)
+    </h1>
+  
+  
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/a6Q8Na575qc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>Writing English words and writing code are very different activities. When
+programming, you spend more time switching files, reading, navigating, and
+editing code compared to writing a long stream. It makes sense that there are
+different types of programs for writing English words versus code (e.g.
+Microsoft Word versus Visual Studio Code).</p>
+<p>As programmers, we spend most of our time editing code, so it&rsquo;s worth investing
+time mastering an editor that fits your needs. Here&rsquo;s how you learn a new
+editor:</p>
+<ul>
+<li>Start with a tutorial (i.e. this lecture, plus resources that we point out)</li>
+<li>Stick with using the editor for all your text editing needs (even if it slows
+you down initially)</li>
+<li>Look things up as you go: if it seems like there should be a better way to do
+something, there probably is</li>
+</ul>
+<p>If you follow the above method, fully committing to using the new program for
+all text editing purposes, the timeline for learning a sophisticated text
+editor looks like this. In an hour or two, you&rsquo;ll learn basic editor functions
+such as opening and editing files, save/quit, and navigating buffers. Once
+you&rsquo;re 20 hours in, you should be as fast as you were with your old editor.
+After that, the benefits start: you will have enough knowledge and muscle
+memory that using the new editor saves you time. Modern text editors are fancy
+and powerful tools, so the learning never stops: you&rsquo;ll get even faster as you
+learn more.</p>
+<h1 id="which-editor-to-learn">Which editor to learn?</h1>
+<p>Programmers have <a href="https://en.wikipedia.org/wiki/Editor_war">strong opinions</a>
+about their text editors.</p>
+<p>Which editors are popular today? See this <a href="https://insights.stackoverflow.com/survey/2019/#development-environments-and-tools">Stack Overflow
+survey</a>
+(there may be some bias because Stack Overflow users may not be representative
+of programmers as a whole). <a href="https://code.visualstudio.com/">Visual Studio
+Code</a> is the most popular editor.
+<a href="https://www.vim.org/">Vim</a> is the most popular command-line-based editor.</p>
+<h2 id="vim">Vim</h2>
+<p>All the instructors of this class use Vim as their editor. Vim has a rich
+history; it originated from the Vi editor (1976), and it&rsquo;s still being
+developed today. Vim has some really neat ideas behind it, and for this reason,
+lots of tools support a Vim emulation mode (for example, 1.4 million people
+have installed <a href="https://github.com/VSCodeVim/Vim">Vim emulation for VS code</a>).
+Vim is probably worth learning even if you finally end up switching to some
+other text editor.</p>
+<p>It&rsquo;s not possible to teach all of Vim&rsquo;s functionality in 50 minutes, so we&rsquo;re
+going to focus on explaining the philosophy of Vim, teaching you the basics,
+showing you some of the more advanced functionality, and giving you the
+resources to master the tool.</p>
+<h1 id="philosophy-of-vim">Philosophy of Vim</h1>
+<p>When programming, you spend most of your time reading/editing, not writing. For
+this reason, Vim is a <em>modal</em> editor: it has different modes for inserting text
+vs manipulating text. Vim is programmable (with Vimscript and also other
+languages like Python), and Vim&rsquo;s interface itself is a programming language:
+keystrokes (with mnemonic names) are commands, and these commands are
+composable. Vim avoids the use of the mouse, because it&rsquo;s too slow; Vim even
+avoids using the arrow keys because it requires too much movement.</p>
+<p>The end result is an editor that can match the speed at which you think.</p>
+<h1 id="modal-editing">Modal editing</h1>
+<p>Vim&rsquo;s design is based on the idea that a lot of programmer time is spent
+reading, navigating, and making small edits, as opposed to writing long streams
+of text. For this reason, Vim has multiple operating modes.</p>
+<ul>
+<li><strong>Normal</strong>: for moving around a file and making edits</li>
+<li><strong>Insert</strong>: for inserting text</li>
+<li><strong>Replace</strong>: for replacing text</li>
+<li><strong>Visual</strong> (plain, line, or block): for selecting blocks of text</li>
+<li><strong>Command-line</strong>: for running a command</li>
+</ul>
+<p>Keystrokes have different meanings in different operating modes. For example,
+the letter <code>x</code> in Insert mode will just insert a literal character &lsquo;x&rsquo;, but in
+Normal mode, it will delete the character under the cursor, and in Visual mode,
+it will delete the selection.</p>
+<p>In its default configuration, Vim shows the current mode in the bottom left.
+The initial/default mode is Normal mode. You&rsquo;ll generally spend most of your
+time between Normal mode and Insert mode.</p>
+<p>You change modes by pressing <code>&lt;ESC&gt;</code> (the escape key) to switch from any mode
+back to Normal mode. From Normal mode, enter Insert mode with <code>i</code>, Replace mode
+with <code>R</code>, Visual mode with <code>v</code>, Visual Line mode with <code>V</code>, Visual Block mode
+with <code>&lt;C-v&gt;</code> (Ctrl-V, sometimes also written <code>^V</code>), and Command-line mode with
+<code>:</code>.</p>
+<p>You use the <code>&lt;ESC&gt;</code> key a lot when using Vim: consider remapping Caps Lock to
+Escape (<a href="https://vim.fandom.com/wiki/Map_caps_lock_to_escape_in_macOS">macOS
+instructions</a>).</p>
+<h1 id="basics">Basics</h1>
+<h2 id="inserting-text">Inserting text</h2>
+<p>From Normal mode, press <code>i</code> to enter Insert mode. Now, Vim behaves like any
+other text editor, until you press <code>&lt;ESC&gt;</code> to return to Normal mode. This,
+along with the basics explained above, are all you need to start editing files
+using Vim (though not particularly efficiently, if you&rsquo;re spending all your
+time editing from Insert mode).</p>
+<h2 id="buffers-tabs-and-windows">Buffers, tabs, and windows</h2>
+<p>Vim maintains a set of open files, called &ldquo;buffers&rdquo;. A Vim session has a number
+of tabs, each of which has a number of windows (split panes). Each window shows
+a single buffer. Unlike other programs you are familiar with, like web
+browsers, there is not a 1-to-1 correspondence between buffers and windows;
+windows are merely views. A given buffer may be open in <em>multiple</em> windows,
+even within the same tab. This can be quite handy, for example, to view two
+different parts of a file at the same time.</p>
+<p>By default, Vim opens with a single tab, which contains a single window.</p>
+<h2 id="command-line">Command-line</h2>
+<p>Command mode can be entered by typing <code>:</code> in Normal mode. Your cursor will jump
+to the command line at the bottom of the screen upon pressing <code>:</code>. This mode
+has many functionalities, including opening, saving, and closing files, and
+<a href="https://twitter.com/iamdevloper/status/435555976687923200">quitting Vim</a>.</p>
+<ul>
+<li><code>:q</code> quit (close window)</li>
+<li><code>:w</code> save (&ldquo;write&rdquo;)</li>
+<li><code>:wq</code> save and quit</li>
+<li><code>:e {name of file}</code> open file for editing</li>
+<li><code>:ls</code> show open buffers</li>
+<li><code>:help {topic}</code> open help
+<ul>
+<li><code>:help :w</code> opens help for the <code>:w</code> command</li>
+<li><code>:help w</code> opens help for the <code>w</code> movement</li>
+</ul>
+</li>
+</ul>
+<h1 id="vims-interface-is-a-programming-language">Vim&rsquo;s interface is a programming language</h1>
+<p>The most important idea in Vim is that Vim&rsquo;s interface itself is a programming
+language. Keystrokes (with mnemonic names) are commands, and these commands
+<em>compose</em>. This enables efficient movement and edits, especially once the
+commands become muscle memory.</p>
+<h2 id="movement">Movement</h2>
+<p>You should spend most of your time in Normal mode, using movement commands to
+navigate the buffer. Movements in Vim are also called &ldquo;nouns&rdquo;, because they
+refer to chunks of text.</p>
+<ul>
+<li>Basic movement: <code>hjkl</code> (left, down, up, right)</li>
+<li>Words: <code>w</code> (next word), <code>b</code> (beginning of word), <code>e</code> (end of word)</li>
+<li>Lines: <code>0</code> (beginning of line), <code>^</code> (first non-blank character), <code>$</code> (end of line)</li>
+<li>Screen: <code>H</code> (top of screen), <code>M</code> (middle of screen), <code>L</code> (bottom of screen)</li>
+<li>Scroll: <code>Ctrl-u</code> (up), <code>Ctrl-d</code> (down)</li>
+<li>File: <code>gg</code> (beginning of file), <code>G</code> (end of file)</li>
+<li>Line numbers: <code>:{number}&lt;CR&gt;</code> or <code>{number}G</code> (line {number})</li>
+<li>Misc: <code>%</code> (corresponding item)</li>
+<li>Find: <code>f{character}</code>, <code>t{character}</code>, <code>F{character}</code>, <code>T{character}</code>
+<ul>
+<li>find/to forward/backward {character} on the current line</li>
+<li><code>,</code> / <code>;</code> for navigating matches</li>
+</ul>
+</li>
+<li>Search: <code>/{regex}</code>, <code>n</code> / <code>N</code> for navigating matches</li>
+</ul>
+<h2 id="selection">Selection</h2>
+<p>Visual modes:</p>
+<ul>
+<li>Visual</li>
+<li>Visual Line</li>
+<li>Visual Block</li>
+</ul>
+<p>Can use movement keys to make selection.</p>
+<h2 id="edits">Edits</h2>
+<p>Everything that you used to do with the mouse, you now do with the keyboard
+using editing commands that compose with movement commands. Here&rsquo;s where Vim&rsquo;s
+interface starts to look like a programming language. Vim&rsquo;s editing commands
+are also called &ldquo;verbs&rdquo;, because verbs act on nouns.</p>
+<ul>
+<li><code>i</code> enter Insert mode
+<ul>
+<li>but for manipulating/deleting text, want to use something more than
+backspace</li>
+</ul>
+</li>
+<li><code>o</code> / <code>O</code> insert line below / above</li>
+<li><code>d{motion}</code> delete {motion}
+<ul>
+<li>e.g. <code>dw</code> is delete word, <code>d$</code> is delete to end of line, <code>d0</code> is delete
+to beginning of line</li>
+</ul>
+</li>
+<li><code>c{motion}</code> change {motion}
+<ul>
+<li>e.g. <code>cw</code> is change word</li>
+<li>like <code>d{motion}</code> followed by <code>i</code></li>
+</ul>
+</li>
+<li><code>x</code> delete character (equal do <code>dl</code>)</li>
+<li><code>s</code> substitute character (equal to <code>xi</code>)</li>
+<li>Visual mode + manipulation
+<ul>
+<li>select text, <code>d</code> to delete it or <code>c</code> to change it</li>
+</ul>
+</li>
+<li><code>u</code> to undo, <code>&lt;C-r&gt;</code> to redo</li>
+<li><code>y</code> to copy / &ldquo;yank&rdquo; (some other commands like <code>d</code> also copy)</li>
+<li><code>p</code> to paste</li>
+<li>Lots more to learn: e.g. <code>~</code> flips the case of a character</li>
+</ul>
+<h2 id="counts">Counts</h2>
+<p>You can combine nouns and verbs with a count, which will perform a given action
+a number of times.</p>
+<ul>
+<li><code>3w</code> move 3 words forward</li>
+<li><code>5j</code> move 5 lines down</li>
+<li><code>7dw</code> delete 7 words</li>
+</ul>
+<h2 id="modifiers">Modifiers</h2>
+<p>You can use modifiers to change the meaning of a noun. Some modifiers are <code>i</code>,
+which means &ldquo;inner&rdquo; or &ldquo;inside&rdquo;, and <code>a</code>, which means &ldquo;around&rdquo;.</p>
+<ul>
+<li><code>ci(</code> change the contents inside the current pair of parentheses</li>
+<li><code>ci[</code> change the contents inside the current pair of square brackets</li>
+<li><code>da'</code> delete a single-quoted string, including the surrounding single quotes</li>
+</ul>
+<h1 id="demo">Demo</h1>
+<p>Here is a broken <a href="https://en.wikipedia.org/wiki/Fizz_buzz">fizz buzz</a>
+implementation:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fizz_buzz</span>(limit):
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(limit):
+        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;fizz&#39;</span>)
+        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;fizz&#39;</span>)
+        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">5</span>:
+            <span style="color:#66d9ef">print</span>(i)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    fizz_buzz(<span style="color:#ae81ff">10</span>)
+</code></pre></div><p>We will fix the following issues:</p>
+<ul>
+<li>Main is never called</li>
+<li>Starts at 0 instead of 1</li>
+<li>Prints &ldquo;fizz&rdquo; and &ldquo;buzz&rdquo; on separate lines for multiples of 15</li>
+<li>Prints &ldquo;fizz&rdquo; for multiples of 5</li>
+<li>Uses a hard-coded argument of 10 instead of taking a command-line argument</li>
+</ul>
+<p>{% comment %}</p>
+<ul>
+<li>main is never called
+<ul>
+<li><code>G</code> end of file</li>
+<li><code>o</code> open new line below</li>
+<li>type in &ldquo;if <strong>name</strong> &hellip;&rdquo; thing</li>
+</ul>
+</li>
+<li>starts at 0 instead of 1
+<ul>
+<li>search for <code>/range</code></li>
+<li><code>ww</code> to move forward 2 words</li>
+<li><code>i</code> to insert text, &ldquo;1, &quot;</li>
+<li><code>ea</code> to insert after limit, &ldquo;+1&rdquo;</li>
+</ul>
+</li>
+<li>newline for &ldquo;fizzbuzz&rdquo;
+<ul>
+<li><code>jj$i</code> to insert text at end of line</li>
+<li>add &ldquo;, end=&rsquo;'&rdquo;</li>
+<li><code>jj.</code> to repeat for second print</li>
+<li><code>jjo</code> to open line below if</li>
+<li>add &ldquo;else: print()&rdquo;</li>
+</ul>
+</li>
+<li>fizz fizz
+<ul>
+<li><code>ci'</code> to change fizz</li>
+</ul>
+</li>
+<li>command-line argument
+<ul>
+<li><code>ggO</code> to open above</li>
+<li>&ldquo;import sys&rdquo;</li>
+<li><code>/10</code></li>
+<li><code>ci(</code> to &ldquo;int(sys.argv[1])&rdquo;
+{% endcomment %}</li>
+</ul>
+</li>
+</ul>
+<p>See the lecture video for the demonstration. Compare how the above changes are
+made using Vim to how you might make the same edits using another program.
+Notice how very few keystrokes are required in Vim, allowing you to edit at the
+speed you think.</p>
+<h1 id="customizing-vim">Customizing Vim</h1>
+<p>Vim is customized through a plain-text configuration file in <code>~/.vimrc</code>
+(containing Vimscript commands). There are probably lots of basic settings that
+you want to turn on.</p>
+<p>We are providing a well-documented basic config that you can use as a starting
+point. We recommend using this because it fixes some of Vim&rsquo;s quirky default
+behavior. <strong>Download our config <a href="https://yoseobdoc.github.io/2020/files/vimrc">here</a> and save it to
+<code>~/.vimrc</code>.</strong></p>
+<p>Vim is heavily customizable, and it&rsquo;s worth spending time exploring
+customization options. You can look at people&rsquo;s dotfiles on GitHub for
+inspiration, for example, your instructors&rsquo; Vim configs
+(<a href="https://github.com/anishathalye/dotfiles/blob/master/vimrc">Anish</a>,
+<a href="https://github.com/jonhoo/configs/blob/master/editor/.config/nvim/init.vim">Jon</a> (uses <a href="https://neovim.io/">neovim</a>),
+<a href="https://github.com/JJGO/dotfiles/blob/master/vim/.vimrc">Jose</a>). There are
+lots of good blog posts on this topic too. Try not to copy-and-paste people&rsquo;s
+full configuration, but read it, understand it, and take what you need.</p>
+<h1 id="extending-vim">Extending Vim</h1>
+<p>There are tons of plugins for extending Vim. Contrary to outdated advice that
+you might find on the internet, you do <em>not</em> need to use a plugin manager for
+Vim (since Vim 8.0). Instead, you can use the built-in package management
+system. Simply create the directory <code>~/.vim/pack/vendor/start/</code>, and put
+plugins in there (e.g. via <code>git clone</code>).</p>
+<p>Here are some of our favorite plugins:</p>
+<ul>
+<li><a href="https://github.com/ctrlpvim/ctrlp.vim">ctrlp.vim</a>: fuzzy file finder</li>
+<li><a href="https://github.com/mileszs/ack.vim">ack.vim</a>: code search</li>
+<li><a href="https://github.com/scrooloose/nerdtree">nerdtree</a>: file explorer</li>
+<li><a href="https://github.com/easymotion/vim-easymotion">vim-easymotion</a>: magic motions</li>
+</ul>
+<p>We&rsquo;re trying to avoid giving an overwhelmingly long list of plugins here. You
+can check out the instructors&rsquo; dotfiles
+(<a href="https://github.com/anishathalye/dotfiles">Anish</a>,
+<a href="https://github.com/jonhoo/configs">Jon</a>,
+<a href="https://github.com/JJGO/dotfiles">Jose</a>) to see what other plugins we use.
+Check out <a href="https://vimawesome.com/">Vim Awesome</a> for more awesome Vim plugins.
+There are also tons of blog posts on this topic: just search for &ldquo;best Vim
+plugins&rdquo;.</p>
+<h1 id="vim-mode-in-other-programs">Vim-mode in other programs</h1>
+<p>Many tools support Vim emulation. The quality varies from good to great;
+depending on the tool, it may not support the fancier Vim features, but most
+cover the basics pretty well.</p>
+<h2 id="shell">Shell</h2>
+<p>If you&rsquo;re a Bash user, use <code>set -o vi</code>. If you use Zsh, <code>bindkey -v</code>. For Fish,
+<code>fish_vi_key_bindings</code>. Additionally, no matter what shell you use, you can
+<code>export EDITOR=vim</code>. This is the environment variable used to decide which
+editor is launched when a program wants to start an editor. For example, <code>git</code>
+will use this editor for commit messages.</p>
+<h2 id="readline">Readline</h2>
+<p>Many programs use the <a href="https://tiswww.case.edu/php/chet/readline/rltop.html">GNU
+Readline</a> library for
+their command-line interface. Readline supports (basic) Vim emulation too,
+which can be enabled by adding the following line to the <code>~/.inputrc</code> file:</p>
+<pre><code>set editing-mode vi
+</code></pre><p>With this setting, for example, the Python REPL will support Vim bindings.</p>
+<h2 id="others">Others</h2>
+<p>There are even vim keybinding extensions for web
+<a href="http://vim.wikia.com/wiki/Vim_key_bindings_for_web_browsers">browsers</a> - some
+popular ones are
+<a href="https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb?hl=en">Vimium</a>
+for Google Chrome and <a href="https://github.com/tridactyl/tridactyl">Tridactyl</a> for
+Firefox. You can even get Vim bindings in <a href="https://github.com/lambdalisue/jupyter-vim-binding">Jupyter
+notebooks</a>.</p>
+<h1 id="advanced-vim">Advanced Vim</h1>
+<p>Here are a few examples to show you the power of the editor. We can&rsquo;t teach you
+all of these kinds of things, but you&rsquo;ll learn them as you go. A good
+heuristic: whenever you&rsquo;re using your editor and you think &ldquo;there must be a
+better way of doing this&rdquo;, there probably is: look it up online.</p>
+<h2 id="search-and-replace">Search and replace</h2>
+<p><code>:s</code> (substitute) command (<a href="http://vim.wikia.com/wiki/Search_and_replace">documentation</a>).</p>
+<ul>
+<li><code>%s/foo/bar/g</code>
+<ul>
+<li>replace foo with bar globally in file</li>
+</ul>
+</li>
+<li><code>%s/\[.*\](\(.*\))/\1/g</code>
+<ul>
+<li>replace named Markdown links with plain URLs</li>
+</ul>
+</li>
+</ul>
+<h2 id="multiple-windows">Multiple windows</h2>
+<ul>
+<li><code>:sp</code> / <code>:vsp</code> to split windows</li>
+<li>Can have multiple views of the same buffer.</li>
+</ul>
+<h2 id="macros">Macros</h2>
+<ul>
+<li><code>q{character}</code> to start recording a macro in register <code>{character}</code></li>
+<li><code>q</code> to stop recording</li>
+<li><code>@{character}</code> replays the macro</li>
+<li>Macro execution stops on error</li>
+<li><code>{number}@{character}</code> executes a macro {number} times</li>
+<li>Macros can be recursive
+<ul>
+<li>first clear the macro with <code>q{character}q</code></li>
+<li>record the macro, with <code>@{character}</code> to invoke the macro recursively
+(will be a no-op until recording is complete)</li>
+</ul>
+</li>
+<li>Example: convert xml to json (<a href="https://yoseobdoc.github.io/2020/files/example-data.xml">file</a>)
+<ul>
+<li>Array of objects with keys &ldquo;name&rdquo; / &ldquo;email&rdquo;</li>
+<li>Use a Python program?</li>
+<li>Use sed / regexes
+<ul>
+<li><code>g/people/d</code></li>
+<li><code>%s/&lt;person&gt;/{/g</code></li>
+<li><code>%s/&lt;name&gt;\(.*\)&lt;\/name&gt;/&quot;name&quot;: &quot;\1&quot;,/g</code></li>
+<li>&hellip;</li>
+</ul>
+</li>
+<li>Vim commands / macros
+<ul>
+<li><code>Gdd</code>, <code>ggdd</code> delete first and last lines</li>
+<li>Macro to format a single element (register <code>e</code>)
+<ul>
+<li>Go to line with <code>&lt;name&gt;</code></li>
+<li><code>qe^r&quot;f&gt;s&quot;: &quot;&lt;ESC&gt;f&lt;C&quot;&lt;ESC&gt;q</code></li>
+</ul>
+</li>
+<li>Macro to format a person
+<ul>
+<li>Go to line with <code>&lt;person&gt;</code></li>
+<li><code>qpS{&lt;ESC&gt;j@eA,&lt;ESC&gt;j@ejS},&lt;ESC&gt;q</code></li>
+</ul>
+</li>
+<li>Macro to format a person and go to the next person
+<ul>
+<li>Go to line with <code>&lt;person&gt;</code></li>
+<li><code>qq@pjq</code></li>
+</ul>
+</li>
+<li>Execute macro until end of file
+<ul>
+<li><code>999@q</code></li>
+</ul>
+</li>
+<li>Manually remove last <code>,</code> and add <code>[</code> and <code>]</code> delimiters</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="resources">Resources</h1>
+<ul>
+<li><code>vimtutor</code> is a tutorial that comes installed with Vim - if Vim is installed, you should be able to run <code>vimtutor</code> from your shell</li>
+<li><a href="https://vim-adventures.com/">Vim Adventures</a> is a game to learn Vim</li>
+<li><a href="http://vim.wikia.com/wiki/Vim_Tips_Wiki">Vim Tips Wiki</a></li>
+<li><a href="https://vimways.org/2019/">Vim Advent Calendar</a> has various Vim tips</li>
+<li><a href="http://www.vimgolf.com/">Vim Golf</a> is <a href="https://en.wikipedia.org/wiki/Code_golf">code golf</a>, but where the programming language is Vim&rsquo;s UI</li>
+<li><a href="https://vi.stackexchange.com/">Vi/Vim Stack Exchange</a></li>
+<li><a href="http://vimcasts.org/">Vim Screencasts</a></li>
+<li><a href="https://pragprog.com/book/dnvim2/practical-vim-second-edition">Practical Vim</a> (book)</li>
+</ul>
+<h1 id="exercises">Exercises</h1>
+<ol>
+<li>Complete <code>vimtutor</code>. Note: it looks best in a
+<a href="https://en.wikipedia.org/wiki/VT100">80x24</a> (80 columns by 24 lines)
+terminal window.</li>
+<li>Download our <a href="https://yoseobdoc.github.io/2020/files/vimrc">basic vimrc</a> and save it to <code>~/.vimrc</code>. Read
+through the well-commented file (using Vim!), and observe how Vim looks and
+behaves slightly differently with the new config.</li>
+<li>Install and configure a plugin:
+<a href="https://github.com/ctrlpvim/ctrlp.vim">ctrlp.vim</a>.
+<ol>
+<li>Create the plugins directory with <code>mkdir -p ~/.vim/pack/vendor/start</code></li>
+<li>Download the plugin: <code>cd ~/.vim/pack/vendor/start; git clone https://github.com/ctrlpvim/ctrlp.vim</code></li>
+<li>Read the
+<a href="https://github.com/ctrlpvim/ctrlp.vim/blob/master/readme.md">documentation</a>
+for the plugin. Try using CtrlP to locate a file by navigating to a
+project directory, opening Vim, and using the Vim command-line to start
+<code>:CtrlP</code>.</li>
+<li>Customize CtrlP by adding
+<a href="https://github.com/ctrlpvim/ctrlp.vim/blob/master/readme.md#basic-options">configuration</a>
+to your <code>~/.vimrc</code> to open CtrlP by pressing Ctrl-P.</li>
+</ol>
+</li>
+<li>To practice using Vim, re-do the <a href="#demo">Demo</a> from lecture on your own
+machine.</li>
+<li>Use Vim for <em>all</em> your text editing for the next month. Whenever something
+seems inefficient, or when you think &ldquo;there must be a better way&rdquo;, try
+Googling it, there probably is. If you get stuck, come to office hours or
+send us an email.</li>
+<li>Configure your other tools to use Vim bindings (see instructions above).</li>
+<li>Further customize your <code>~/.vimrc</code> and install more plugins.</li>
+<li>(Advanced) Convert XML to JSON (<a href="https://yoseobdoc.github.io/2020/files/example-data.xml">example file</a>)
+using Vim macros. Try to do this on your own, but you can look at the
+<a href="#macros">macros</a> section above if you get stuck.</li>
+</ol>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+            
+            <div class="post-actions-wrap">
+  
+</div>
+     
+
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Porco Rosso. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        <div class="post-actions-wrap">
+  
+</div>
+     
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="1">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/se6644%25!%28EXTRA%20string=https%3A%2F%2Fyoseobdoc.github.io%2Fpage%2Feditors%2F%29">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Porco Rosso</h4>
+    
+      <div id="about-card-bio">Porco treats himself to dinner at the Hotel Adriano, which is run by his friend Gina.</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        an Italian World War I fighter ace and freelance bounty hunter
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Adriatic Sea
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('http://user-images.githubusercontent.com/33090364/88197328-981a7500-cc42-11ea-855f-600fead66a4a.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://yoseobdoc.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+
+
+
+
+    
+  </body>
+</html>
+

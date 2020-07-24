@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="Porco Rosso">
+<meta name="keywords" content="tech">
+<meta name="description" content="Have you ever wanted to take data in one format and turn it into a different format? Of course you have! That, in very general terms, is what this lecture is all about. Specifically, massaging data, whether in text or binary format, until you end up with exactly what you wanted.
+We&rsquo;ve already seen some basic data wrangling in past lectures. Pretty much any time you use the | operator, you are performing some kind of data wrangling.">
+
+
+<meta property="og:description" content="Have you ever wanted to take data in one format and turn it into a different format? Of course you have! That, in very general terms, is what this lecture is all about. Specifically, massaging data, whether in text or binary format, until you end up with exactly what you wanted.
+We&rsquo;ve already seen some basic data wrangling in past lectures. Pretty much any time you use the | operator, you are performing some kind of data wrangling.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Data Wrangling">
+<meta name="twitter:title" content="Data Wrangling">
+<meta property="og:url" content="https://yoseobdoc.github.io/page/data-wrangling/">
+<meta property="twitter:url" content="https://yoseobdoc.github.io/page/data-wrangling/">
+<meta property="og:site_name" content="YoseobDoc">
+<meta property="og:description" content="Have you ever wanted to take data in one format and turn it into a different format? Of course you have! That, in very general terms, is what this lecture is all about. Specifically, massaging data, whether in text or binary format, until you end up with exactly what you wanted.
+We&rsquo;ve already seen some basic data wrangling in past lectures. Pretty much any time you use the | operator, you are performing some kind of data wrangling.">
+<meta name="twitter:description" content="Have you ever wanted to take data in one format and turn it into a different format? Of course you have! That, in very general terms, is what this lecture is all about. Specifically, massaging data, whether in text or binary format, until you end up with exactly what you wanted.
+We&rsquo;ve already seen some basic data wrangling in past lectures. Pretty much any time you use the | operator, you are performing some kind of data wrangling.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2019-01-16T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2019-01-16T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Missing-Semester">
+    
+  
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@se6644">
+
+
+  <meta name="twitter:creator" content="@se6644">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=640">
+
+
+    <title>Data Wrangling</title>
+
+    <link rel="icon" href="https://yoseobdoc.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://yoseobdoc.github.io/page/data-wrangling/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://yoseobdoc.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-108668950-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="1">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://yoseobdoc.github.io/">YoseobDoc</a>
+  </div>
+  
+    
+      <a class="header-right-icon open-algolia-search"
+         href="https://yoseobdoc.github.io/#search">
+    
+    
+      <i class="fa fa-lg fa-search"></i>
+    
+    
+    </a>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  
+    window.addEventListener('load', (event) => {
+        document.querySelectorAll("mjx-container").forEach(function(x){
+          x.parentElement.classList += 'has-jax'})
+      });
+  
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</header>
+
+      <nav id="sidebar" data-behavior="1">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://yoseobdoc.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Porco Rosso</h4>
+        
+          <h5 class="sidebar-profile-bio">Porco treats himself to dinner at the Hotel Adriano, which is run by his friend Gina.</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/page">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">./missing-semester</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/yoseobDoc" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="1"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Data Wrangling
+    </h1>
+  
+  
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/sz_dsktIjt4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>Have you ever wanted to take data in one format and turn it into a
+different format? Of course you have! That, in very general terms, is
+what this lecture is all about. Specifically, massaging data, whether in
+text or binary format, until you end up with exactly what you wanted.</p>
+<p>We&rsquo;ve already seen some basic data wrangling in past lectures. Pretty
+much any time you use the <code>|</code> operator, you are performing some kind of
+data wrangling. Consider a command like <code>journalctl | grep -i intel</code>. It
+finds all system log entries that mention Intel (case insensitive). You
+may not think of it as wrangling data, but it is going from one format
+(your entire system log) to a format that is more useful to you (just
+the intel log entries). Most data wrangling is about knowing what tools
+you have at your disposal, and how to combine them.</p>
+<p>Let&rsquo;s start from the beginning. To wrangle data, we need two things:
+data to wrangle, and something to do with it. Logs often make for a good
+use-case, because you often want to investigate things about them, and
+reading the whole thing isn&rsquo;t feasible. Let&rsquo;s figure out who&rsquo;s trying to
+log into my server by looking at my server&rsquo;s log:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh myserver journalctl
+</code></pre></div><p>That&rsquo;s far too much stuff. Let&rsquo;s limit it to ssh stuff:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh myserver journalctl | grep sshd
+</code></pre></div><p>Notice that we&rsquo;re using a pipe to stream a <em>remote</em> file through <code>grep</code>
+on our local computer! <code>ssh</code> is magical, and we will talk more about it
+in the next lecture on the command-line environment. This is still way
+more stuff than we wanted though. And pretty hard to read. Let&rsquo;s do
+better:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh myserver <span style="color:#e6db74">&#39;journalctl | grep sshd | grep &#34;Disconnected from&#34;&#39;</span> | less
+</code></pre></div><p>Why the additional quoting? Well, our logs may be quite large, and it&rsquo;s
+wasteful to stream it all to our computer and then do the filtering.
+Instead, we can do the filtering on the remote server, and then massage
+the data locally. <code>less</code> gives us a &ldquo;pager&rdquo; that allows us to scroll up
+and down through the long output. To save some additional traffic while
+we debug our command-line, we can even stick the current filtered logs
+into a file so that we don&rsquo;t have to access the network while
+developing:</p>
+<pre><code class="language-console" data-lang="console">$ ssh myserver 'journalctl | grep sshd | grep &quot;Disconnected from&quot;' &gt; ssh.log
+$ less ssh.log
+</code></pre><p>There&rsquo;s still a lot of noise here. There are <em>a lot</em> of ways to get rid
+of that, but let&rsquo;s look at one of the most powerful tools in your
+toolkit: <code>sed</code>.</p>
+<p><code>sed</code> is a &ldquo;stream editor&rdquo; that builds on top of the old <code>ed</code> editor. In
+it, you basically give short commands for how to modify the file, rather
+than manipulate its contents directly (although you can do that too).
+There are tons of commands, but one of the most common ones is <code>s</code>:
+substitution. For example, we can write:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh myserver journalctl
+ | grep sshd
+ | grep <span style="color:#e6db74">&#34;Disconnected from&#34;</span>
+ | sed <span style="color:#e6db74">&#39;s/.*Disconnected from //&#39;</span>
+</code></pre></div><p>What we just wrote was a simple <em>regular expression</em>; a powerful
+construct that lets you match text against patterns. The <code>s</code> command is
+written on the form: <code>s/REGEX/SUBSTITUTION/</code>, where <code>REGEX</code> is the
+regular expression you want to search for, and <code>SUBSTITUTION</code> is the
+text you want to substitute matching text with.</p>
+<p>(You may recognize this syntax from the &ldquo;Search and replace&rdquo; section of our Vim
+<a href="https://yoseobdoc.github.io/2020/editors/#advanced-vim">lecture notes</a>! Indeed, Vim uses a syntax for
+searching and replacing that is similar to <code>sed</code>'s substitution command.
+Learning one tool often helps you become more proficient with others.)</p>
+<h2 id="regular-expressions">Regular expressions</h2>
+<p>Regular expressions are common and useful enough that it&rsquo;s worthwhile to
+take some time to understand how they work. Let&rsquo;s start by looking at
+the one we used above: <code>/.*Disconnected from /</code>. Regular expressions are
+usually (though not always) surrounded by <code>/</code>. Most ASCII characters
+just carry their normal meaning, but some characters have &ldquo;special&rdquo;
+matching behavior. Exactly which characters do what vary somewhat
+between different implementations of regular expressions, which is a
+source of great frustration. Very common patterns are:</p>
+<ul>
+<li><code>.</code> means &ldquo;any single character&rdquo; except newline</li>
+<li><code>*</code> zero or more of the preceding match</li>
+<li><code>+</code> one or more of the preceding match</li>
+<li><code>[abc]</code> any one character of <code>a</code>, <code>b</code>, and <code>c</code></li>
+<li><code>(RX1|RX2)</code> either something that matches <code>RX1</code> or <code>RX2</code></li>
+<li><code>^</code> the start of the line</li>
+<li><code>$</code> the end of the line</li>
+</ul>
+<p><code>sed</code>'s regular expressions are somewhat weird, and will require you to
+put a <code>\</code> before most of these to give them their special meaning. Or
+you can pass <code>-E</code>.</p>
+<p>So, looking back at <code>/.*Disconnected from /</code>, we see that it matches
+any text that starts with any number of characters, followed by the
+literal string &ldquo;Disconnected from ”. Which is what we wanted. But
+{% comment %}
+note: the spelling of &ldquo;trixy&rdquo; below is intentional; see <a href="https://github.com/missing-semester/missing-semester/pull/84">https://github.com/missing-semester/missing-semester/pull/84</a>
+{% endcomment %}
+beware, regular expressions are trixy. What if someone tried to log in
+with the username &ldquo;Disconnected from&rdquo;? We&rsquo;d have:</p>
+<pre><code>Jan 17 03:13:00 thesquareplanet.com sshd[2631]: Disconnected from invalid user Disconnected from 46.97.239.16 port 55920 [preauth]
+</code></pre><p>What would we end up with? Well, <code>*</code> and <code>+</code> are, by default, &ldquo;greedy&rdquo;.
+They will match as much text as they can. So, in the above, we&rsquo;d end up
+with just</p>
+<pre><code>46.97.239.16 port 55920 [preauth]
+</code></pre><p>Which may not be what we wanted. In some regular expression
+implementations, you can just suffix <code>*</code> or <code>+</code> with a <code>?</code> to make them
+non-greedy, but sadly <code>sed</code> doesn&rsquo;t support that. We <em>could</em> switch to
+perl&rsquo;s command-line mode though, which <em>does</em> support that construct:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">perl -pe <span style="color:#e6db74">&#39;s/.*?Disconnected from //&#39;</span>
+</code></pre></div><p>We&rsquo;ll stick to <code>sed</code> for the rest of this, because it&rsquo;s by far the more
+common tool for these kinds of jobs. <code>sed</code> can also do other handy
+things like print lines following a given match, do multiple
+substitutions per invocation, search for things, etc. But we won&rsquo;t cover
+that too much here. <code>sed</code> is basically an entire topic in and of itself,
+but there are often better tools.</p>
+<p>Okay, so we also have a suffix we&rsquo;d like to get rid of. How might we do
+that? It&rsquo;s a little tricky to match just the text that follows the
+username, especially if the username can have spaces and such! What we
+need to do is match the <em>whole</em> line:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> | sed -E <span style="color:#e6db74">&#39;s/.*Disconnected from (invalid |authenticating )?user .* [^ ]+ port [0-9]+( \[preauth\])?$//&#39;</span>
+</code></pre></div><p>Let&rsquo;s look at what&rsquo;s going on with a <a href="https://regex101.com/r/qqbZqh/2">regex
+debugger</a>. Okay, so the start is still
+as before. Then, we&rsquo;re matching any of the &ldquo;user&rdquo; variants (there are
+two prefixes in the logs). Then we&rsquo;re matching on any string of
+characters where the username is. Then we&rsquo;re matching on any single word
+(<code>[^ ]+</code>; any non-empty sequence of non-space characters). Then the word
+&ldquo;port&rdquo; followed by a sequence of digits. Then possibly the suffix
+<code>[preauth]</code>, and then the end of the line.</p>
+<p>Notice that with this technique, as username of &ldquo;Disconnected from&rdquo;
+won&rsquo;t confuse us any more. Can you see why?</p>
+<p>There is one problem with this though, and that is that the entire log
+becomes empty. We want to <em>keep</em> the username after all. For this, we
+can use &ldquo;capture groups&rdquo;. Any text matched by a regex surrounded by
+parentheses is stored in a numbered capture group. These are available
+in the substitution (and in some engines, even in the pattern itself!)
+as <code>\1</code>, <code>\2</code>, <code>\3</code>, etc. So:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> | sed -E <span style="color:#e6db74">&#39;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#39;</span>
+</code></pre></div><p>As you can probably imagine, you can come up with <em>really</em> complicated
+regular expressions. For example, here&rsquo;s an article on how you might
+match an <a href="https://www.regular-expressions.info/email.html">e-mail
+address</a>. It&rsquo;s <a href="https://emailregex.com/">not
+easy</a>. And there&rsquo;s <a href="https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression/1917982">lots of
+discussion</a>.
+And people have <a href="https://fightingforalostcause.net/content/misc/2006/compare-email-regex.php">written
+tests</a>.
+And <a href="https://mathiasbynens.be/demo/url-regex">test matrices</a>. You can
+even write a regex for determining if a given number <a href="https://www.noulakaz.net/2007/03/18/a-regular-expression-to-check-for-prime-numbers/">is a prime
+number</a>.</p>
+<p>Regular expressions are notoriously hard to get right, but they are also
+very handy to have in your toolbox!</p>
+<h2 id="back-to-data-wrangling">Back to data wrangling</h2>
+<p>Okay, so we now have</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh myserver journalctl
+ | grep sshd
+ | grep <span style="color:#e6db74">&#34;Disconnected from&#34;</span>
+ | sed -E <span style="color:#e6db74">&#39;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#39;</span>
+</code></pre></div><p><code>sed</code> can do all sorts of other interesting things, like injecting text
+(with the <code>i</code> command), explicitly printing lines (with the <code>p</code>
+command), selecting lines by index, and lots of other things. Check <code>man sed</code>!</p>
+<p>Anyway. What we have now gives us a list of all the usernames that have
+attempted to log in. But this is pretty unhelpful. Let&rsquo;s look for common
+ones:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh myserver journalctl
+ | grep sshd
+ | grep <span style="color:#e6db74">&#34;Disconnected from&#34;</span>
+ | sed -E <span style="color:#e6db74">&#39;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#39;</span>
+ | sort | uniq -c
+</code></pre></div><p><code>sort</code> will, well, sort its input. <code>uniq -c</code> will collapse consecutive
+lines that are the same into a single line, prefixed with a count of the
+number of occurrences. We probably want to sort that too and only keep
+the most common usernames:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh myserver journalctl
+ | grep sshd
+ | grep <span style="color:#e6db74">&#34;Disconnected from&#34;</span>
+ | sed -E <span style="color:#e6db74">&#39;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#39;</span>
+ | sort | uniq -c
+ | sort -nk1,1 | tail -n10
+</code></pre></div><p><code>sort -n</code> will sort in numeric (instead of lexicographic) order. <code>-k1,1</code>
+means &ldquo;sort by only the first whitespace-separated column&rdquo;. The <code>,n</code>
+part says &ldquo;sort until the <code>n</code>th field, where the default is the end of
+the line. In this <em>particular</em> example, sorting by the whole line
+wouldn&rsquo;t matter, but we&rsquo;re here to learn!</p>
+<p>If we wanted the <em>least</em> common ones, we could use <code>head</code> instead of
+<code>tail</code>. There&rsquo;s also <code>sort -r</code>, which sorts in reverse order.</p>
+<p>Okay, so that&rsquo;s pretty cool, but what if we&rsquo;d like these extract only the usernames
+as a comma-separated list instead of one per line, perhaps for a config file?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh myserver journalctl
+ | grep sshd
+ | grep <span style="color:#e6db74">&#34;Disconnected from&#34;</span>
+ | sed -E <span style="color:#e6db74">&#39;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#39;</span>
+ | sort | uniq -c
+ | sort -nk1,1 | tail -n10
+ | awk <span style="color:#e6db74">&#39;{print $2}&#39;</span> | paste -sd,
+</code></pre></div><p>Let&rsquo;s start with <code>paste</code>: it lets you combine lines (<code>-s</code>) by a given
+single-character delimiter (<code>-d</code>; <code>,</code> in this case). But what&rsquo;s this <code>awk</code> business?</p>
+<h2 id="awk----another-editor">awk &ndash; another editor</h2>
+<p><code>awk</code> is a programming language that just happens to be really good at
+processing text streams. There is <em>a lot</em> to say about <code>awk</code> if you were
+to learn it properly, but as with many other things here, we&rsquo;ll just go
+through the basics.</p>
+<p>First, what does <code>{print $2}</code> do? Well, <code>awk</code> programs take the form of
+an optional pattern plus a block saying what to do if the pattern
+matches a given line. The default pattern (which we used above) matches
+all lines. Inside the block, <code>$0</code> is set to the entire line&rsquo;s contents,
+and <code>$1</code> through <code>$n</code> are set to the <code>n</code>th <em>field</em> of that line, when
+separated by the <code>awk</code> field separator (whitespace by default, change
+with <code>-F</code>). In this case, we&rsquo;re saying that, for every line, print the
+contents of the second field, which happens to be the username!</p>
+<p>Let&rsquo;s see if we can do something fancier. Let&rsquo;s compute the number of
+single-use usernames that start with <code>c</code> and end with <code>e</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> | awk <span style="color:#e6db74">&#39;$1 == 1 &amp;&amp; $2 ~ /^c[^ ]*e$/ { print $2 }&#39;</span> | wc -l
+</code></pre></div><p>There&rsquo;s a lot to unpack here. First, notice that we now have a pattern
+(the stuff that goes before <code>{...}</code>). The pattern says that the first
+field of the line should be equal to 1 (that&rsquo;s the count from <code>uniq -c</code>), and that the second field should match the given regular
+expression. And the block just says to print the username. We then count
+the number of lines in the output with <code>wc -l</code>.</p>
+<p>However, <code>awk</code> is a programming language, remember?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-awk" data-lang="awk">BEGIN { <span style="color:#a6e22e">rows</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> }
+<span style="color:#f92672">$</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">$</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">~</span> <span style="color:#e6db74">/^c[^ ]*e$/</span> { <span style="color:#a6e22e">rows</span> <span style="color:#f92672">+=</span> <span style="color:#f92672">$</span><span style="color:#ae81ff">1</span> }
+END { <span style="color:#66d9ef">print</span> <span style="color:#a6e22e">rows</span> }
+</code></pre></div><p><code>BEGIN</code> is a pattern that matches the start of the input (and <code>END</code>
+matches the end). Now, the per-line block just adds the count from the
+first field (although it&rsquo;ll always be 1 in this case), and then we print
+it out at the end. In fact, we <em>could</em> get rid of <code>grep</code> and <code>sed</code>
+entirely, because <code>awk</code> <a href="https://backreference.org/2010/02/10/idiomatic-awk/">can do it
+all</a>, but we&rsquo;ll
+leave that as an exercise to the reader.</p>
+<h2 id="analyzing-data">Analyzing data</h2>
+<p>You can do math directly in your shell using <code>bc</code>, a calculator that can read
+from STDIN! For example, add the numbers on each line together by concatenating
+them together, delimited by <code>+</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> | paste -sd+ | bc -l
+</code></pre></div><p>Or produce more elaborate expressions:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#34;2*(</span><span style="color:#66d9ef">$(</span>data | paste -sd+<span style="color:#66d9ef">)</span><span style="color:#e6db74">)&#34;</span> | bc -l
+</code></pre></div><p>You can get stats in a variety of ways.
+<a href="https://github.com/nferraz/st"><code>st</code></a> is pretty neat, but if you already
+have <a href="https://www.r-project.org/">R</a>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh myserver journalctl
+ | grep sshd
+ | grep <span style="color:#e6db74">&#34;Disconnected from&#34;</span>
+ | sed -E <span style="color:#e6db74">&#39;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#39;</span>
+ | sort | uniq -c
+ | awk <span style="color:#e6db74">&#39;{print $1}&#39;</span> | R --slave -e <span style="color:#e6db74">&#39;x &lt;- scan(file=&#34;stdin&#34;, quiet=TRUE); summary(x)&#39;</span>
+</code></pre></div><p>R is another (weird) programming language that&rsquo;s great at data analysis
+and <a href="https://ggplot2.tidyverse.org/">plotting</a>. We won&rsquo;t go into too
+much detail, but suffice to say that <code>summary</code> prints summary statistics
+for a vector, and we created a vector containing the input stream of
+numbers, so R gives us the statistics we wanted!</p>
+<p>If you just want some simple plotting, <code>gnuplot</code> is your friend:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh myserver journalctl
+ | grep sshd
+ | grep <span style="color:#e6db74">&#34;Disconnected from&#34;</span>
+ | sed -E <span style="color:#e6db74">&#39;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#39;</span>
+ | sort | uniq -c
+ | sort -nk1,1 | tail -n10
+ | gnuplot -p -e <span style="color:#e6db74">&#39;set boxwidth 0.5; plot &#34;-&#34; using 1:xtic(2) with boxes&#39;</span>
+</code></pre></div><h2 id="data-wrangling-to-make-arguments">Data wrangling to make arguments</h2>
+<p>Sometimes you want to do data wrangling to find things to install or
+remove based on some longer list. The data wrangling we&rsquo;ve talked about
+so far + <code>xargs</code> can be a powerful combo.</p>
+<p>For example, as seen in lecture, I can use the following command to uninstall
+old nightly builds of Rust from my system by extracting the old build names
+using data wrangling tools and then passing them via <code>xargs</code> to the
+uninstaller:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">rustup toolchain list | grep nightly | grep -vE <span style="color:#e6db74">&#34;nightly-x86&#34;</span> | sed <span style="color:#e6db74">&#39;s/-x86.*//&#39;</span> | xargs rustup toolchain uninstall
+</code></pre></div><h2 id="wrangling-binary-data">Wrangling binary data</h2>
+<p>So far, we have mostly talked about wrangling textual data, but pipes
+are just as useful for binary data. For example, we can use ffmpeg to
+capture an image from our camera, convert it to grayscale, compress it,
+send it to a remote machine over SSH, decompress it there, make a copy,
+and then display it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ffmpeg -loglevel panic -i /dev/video0 -frames <span style="color:#ae81ff">1</span> -f image2 -
+ | convert - -colorspace gray -
+ | gzip
+ | ssh mymachine <span style="color:#e6db74">&#39;gzip -d | tee copy.jpg | env DISPLAY=:0 feh -&#39;</span>
+</code></pre></div><h1 id="exercises">Exercises</h1>
+<ol>
+<li>Take this <a href="https://regexone.com/">short interactive regex tutorial</a>.</li>
+<li>Find the number of words (in <code>/usr/share/dict/words</code>) that contain at
+least three <code>a</code>s and don&rsquo;t have a <code>'s</code> ending. What are the three
+most common last two letters of those words? <code>sed</code>'s <code>y</code> command, or
+the <code>tr</code> program, may help you with case insensitivity. How many
+of those two-letter combinations are there? And for a challenge:
+which combinations do not occur?</li>
+<li>To do in-place substitution it is quite tempting to do something like
+<code>sed s/REGEX/SUBSTITUTION/ input.txt &gt; input.txt</code>. However this is a
+bad idea, why? Is this particular to <code>sed</code>? Use <code>man sed</code> to find out
+how to accomplish this.</li>
+<li>Find your average, median, and max system boot time over the last ten
+boots. Use <code>journalctl</code> on Linux and <code>log show</code> on macOS, and look
+for log timestamps near the beginning and end of each boot. On Linux,
+they may look something like:
+<pre><code>Logs begin at ...
+</code></pre><p>and</p>
+<pre><code>systemd[577]: Startup finished in ...
+</code></pre><p>On macOS, <a href="https://eclecticlight.co/2018/03/21/macos-unified-log-3-finding-your-way/">look
+for</a>:</p>
+<pre><code>=== system boot:
+</code></pre><p>and</p>
+<pre><code>Previous shutdown cause: 5
+</code></pre></li>
+<li>Look for boot messages that are <em>not</em> shared between your past three
+reboots (see <code>journalctl</code>'s <code>-b</code> flag). Break this task down into
+multiple steps. First, find a way to get just the logs from the past
+three boots. There may be an applicable flag on the tool you use to
+extract the boot logs, or you can use <code>sed '0,/STRING/d'</code> to remove
+all lines previous to one that matches <code>STRING</code>. Next, remove any
+parts of the line that <em>always</em> varies (like the timestamp). Then,
+de-duplicate the input lines and keep a count of each one (<code>uniq</code> is
+your friend). And finally, eliminate any line whose count is 3 (since
+it <em>was</em> shared among all the boots).</li>
+<li>Find an online data set like <a href="https://stats.wikimedia.org/EN/TablesWikipediaZZ.htm">this
+one</a>, <a href="https://ucr.fbi.gov/crime-in-the-u.s/2016/crime-in-the-u.s.-2016/topic-pages/tables/table-1">this
+one</a>.
+or maybe one <a href="https://www.springboard.com/blog/free-public-data-sets-data-science-project/">from
+here</a>.
+Fetch it using <code>curl</code> and extract out just two columns of numerical
+data. If you&rsquo;re fetching HTML data,
+<a href="https://github.com/EricChiang/pup"><code>pup</code></a> might be helpful. For JSON
+data, try <a href="https://stedolan.github.io/jq/"><code>jq</code></a>. Find the min and
+max of one column in a single command, and the sum of the difference
+between the two columns in another.</li>
+</ol>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+            
+            <div class="post-actions-wrap">
+  
+</div>
+     
+
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Porco Rosso. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        <div class="post-actions-wrap">
+  
+</div>
+     
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="1">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/se6644%25!%28EXTRA%20string=https%3A%2F%2Fyoseobdoc.github.io%2Fpage%2Fdata-wrangling%2F%29">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Porco Rosso</h4>
+    
+      <div id="about-card-bio">Porco treats himself to dinner at the Hotel Adriano, which is run by his friend Gina.</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        an Italian World War I fighter ace and freelance bounty hunter
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Adriatic Sea
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('http://user-images.githubusercontent.com/33090364/88197328-981a7500-cc42-11ea-855f-600fead66a4a.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://yoseobdoc.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+
+
+
+
+    
+  </body>
+</html>
+

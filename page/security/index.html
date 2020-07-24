@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="Porco Rosso">
+<meta name="keywords" content="tech">
+<meta name="description" content="Last year&rsquo;s security and privacy lecture focused on how you can be more secure as a computer user. This year, we will focus on security and cryptography concepts that are relevant in understanding tools covered earlier in this class, such as the use of hash functions in Git or key derivation functions and symmetric/asymmetric cryptosystems in SSH.
+This lecture is not a substitute for a more rigorous and complete course on computer systems security (6.">
+
+
+<meta property="og:description" content="Last year&rsquo;s security and privacy lecture focused on how you can be more secure as a computer user. This year, we will focus on security and cryptography concepts that are relevant in understanding tools covered earlier in this class, such as the use of hash functions in Git or key derivation functions and symmetric/asymmetric cryptosystems in SSH.
+This lecture is not a substitute for a more rigorous and complete course on computer systems security (6.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Security and Cryptography">
+<meta name="twitter:title" content="Security and Cryptography">
+<meta property="og:url" content="https://yoseobdoc.github.io/page/security/">
+<meta property="twitter:url" content="https://yoseobdoc.github.io/page/security/">
+<meta property="og:site_name" content="YoseobDoc">
+<meta property="og:description" content="Last year&rsquo;s security and privacy lecture focused on how you can be more secure as a computer user. This year, we will focus on security and cryptography concepts that are relevant in understanding tools covered earlier in this class, such as the use of hash functions in Git or key derivation functions and symmetric/asymmetric cryptosystems in SSH.
+This lecture is not a substitute for a more rigorous and complete course on computer systems security (6.">
+<meta name="twitter:description" content="Last year&rsquo;s security and privacy lecture focused on how you can be more secure as a computer user. This year, we will focus on security and cryptography concepts that are relevant in understanding tools covered earlier in this class, such as the use of hash functions in Git or key derivation functions and symmetric/asymmetric cryptosystems in SSH.
+This lecture is not a substitute for a more rigorous and complete course on computer systems security (6.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2019-01-28T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2019-01-28T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Missing-Semester">
+    
+  
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@se6644">
+
+
+  <meta name="twitter:creator" content="@se6644">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=640">
+
+
+    <title>Security and Cryptography</title>
+
+    <link rel="icon" href="https://yoseobdoc.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://yoseobdoc.github.io/page/security/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://yoseobdoc.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-108668950-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="1">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://yoseobdoc.github.io/">YoseobDoc</a>
+  </div>
+  
+    
+      <a class="header-right-icon open-algolia-search"
+         href="https://yoseobdoc.github.io/#search">
+    
+    
+      <i class="fa fa-lg fa-search"></i>
+    
+    
+    </a>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  
+    window.addEventListener('load', (event) => {
+        document.querySelectorAll("mjx-container").forEach(function(x){
+          x.parentElement.classList += 'has-jax'})
+      });
+  
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</header>
+
+      <nav id="sidebar" data-behavior="1">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://yoseobdoc.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Porco Rosso</h4>
+        
+          <h5 class="sidebar-profile-bio">Porco treats himself to dinner at the Hotel Adriano, which is run by his friend Gina.</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/page">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">./missing-semester</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/yoseobDoc" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="1"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Security and Cryptography
+    </h1>
+  
+  
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/tjwobAmnKTo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>Last year&rsquo;s <a href="https://yoseobdoc.github.io/2019/security/">security and privacy lecture</a> focused on how you
+can be more secure as a computer <em>user</em>. This year, we will focus on security
+and cryptography concepts that are relevant in understanding tools covered
+earlier in this class, such as the use of hash functions in Git or key
+derivation functions and symmetric/asymmetric cryptosystems in SSH.</p>
+<p>This lecture is not a substitute for a more rigorous and complete course on
+computer systems security (<a href="https://css.csail.mit.edu/6.858/">6.858</a>) or
+cryptography (<a href="https://courses.csail.mit.edu/6.857/">6.857</a> and 6.875). Don&rsquo;t
+do security work without formal training in security. Unless you&rsquo;re an expert,
+don&rsquo;t <a href="https://www.schneier.com/blog/archives/2015/05/amateurs_produc.html">roll your own
+crypto</a>.
+The same principle applies to systems security.</p>
+<p>This lecture has a very informal (but we think practical) treatment of basic
+cryptography concepts. This lecture won&rsquo;t be enough to teach you how to
+<em>design</em> secure systems or cryptographic protocols, but we hope it will be
+enough to give you a general understanding of the programs and protocols you
+already use.</p>
+<h1 id="entropy">Entropy</h1>
+<p><a href="https://en.wikipedia.org/wiki/Entropy_(information_theory)">Entropy</a> is a
+measure of randomness. This is useful, for example, when determining the
+strength of a password.</p>
+<p><img src="https://imgs.xkcd.com/comics/password_strength.png" alt="XKCD 936: Password Strength"></p>
+<p>As the above <a href="https://xkcd.com/936/">XKCD comic</a> illustrates, a password like
+&ldquo;correcthorsebatterystaple&rdquo; is more secure than one like &ldquo;Tr0ub4dor&amp;3&rdquo;. But how
+do you quantify something like this?</p>
+<p>Entropy is measured in <em>bits</em>, and when selecting uniformly at random from a
+set of possible outcomes, the entropy is equal to <code>log_2(# of possibilities)</code>.
+A fair coin flip gives 1 bit of entropy. A dice roll (of a 6-sided die) has
+~2.58 bits of entropy.</p>
+<p>You should consider that the attacker knows the <em>model</em> of the password, but
+not the randomness (e.g. from <a href="https://en.wikipedia.org/wiki/Diceware">dice
+rolls</a>) used to select a particular
+password.</p>
+<p>How many bits of entropy is enough? It depends on your threat model. For online
+guessing, as the XKCD comic points out, ~40 bits of entropy is pretty good. To
+be resistant to offline guessing, a stronger password would be necessary (e.g.
+80 bits, or more).</p>
+<h1 id="hash-functions">Hash functions</h1>
+<p>A <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">cryptographic hash
+function</a> maps data
+of arbitrary size to a fixed size, and has some special properties. A rough
+specification of a hash function is as follows:</p>
+<pre><code>hash(value: array&lt;byte&gt;) -&gt; vector&lt;byte, N&gt;  (for some fixed N)
+</code></pre><p>An example of a hash function is <a href="https://en.wikipedia.org/wiki/SHA-1">SHA1</a>,
+which is used in Git. It maps arbitrary-sized inputs to 160-bit outputs (which
+can be represented as 40 hexadecimal characters). We can try out the SHA1 hash
+on an input using the <code>sha1sum</code> command:</p>
+<pre><code class="language-console" data-lang="console">$ printf 'hello' | sha1sum
+aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d
+$ printf 'hello' | sha1sum
+aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d
+$ printf 'Hello' | sha1sum 
+f7ff9e8b7bb2e09b70935a5d785e0cc5d9d0abf0
+</code></pre><p>At a high level, a hash function can be thought of as a hard-to-invert
+random-looking (but deterministic) function (and this is the <a href="https://en.wikipedia.org/wiki/Random_oracle">ideal model of a
+hash function</a>). A hash function
+has the following properties:</p>
+<ul>
+<li>Deterministic: the same input always generates the same output.</li>
+<li>Non-invertible: it is hard to find an input <code>m</code> such that <code>hash(m) = h</code> for
+some desired output <code>h</code>.</li>
+<li>Target collision resistant: given an input <code>m_1</code>, it&rsquo;s hard to find a
+different input <code>m_2</code> such that <code>hash(m_1) = hash(m_2)</code>.</li>
+<li>Collision resistant: it&rsquo;s hard to find two inputs <code>m_1</code> and <code>m_2</code> such that
+<code>hash(m_1) = hash(m_2)</code> (note that this is a strictly stronger property than
+target collision resistance).</li>
+</ul>
+<p>Note: while it may work for certain purposes, SHA-1 is <a href="https://shattered.io/">no
+longer</a> considered a strong cryptographic hash function.
+You might find this table of <a href="https://valerieaurora.org/hash.html">lifetimes of cryptographic hash
+functions</a> interesting. However, note that
+recommending specific hash functions is beyond the scope of this lecture. If you
+are doing work where this matters, you need formal training in
+security/cryptography.</p>
+<h2 id="applications">Applications</h2>
+<ul>
+<li>Git, for content-addressed storage. The idea of a <a href="https://en.wikipedia.org/wiki/Hash_function">hash
+function</a> is a more general
+concept (there are non-cryptographic hash functions). Why does Git use a
+cryptographic hash function?</li>
+<li>A short summary of the contents of a file. Software can often be downloaded
+from (potentially less trustworthy) mirrors, e.g. Linux ISOs, and it would be
+nice to not have to trust them. The official sites usually post hashes
+alongside the download links (that point to third-party mirrors), so that the
+hash can be checked after downloading a file.</li>
+<li><a href="https://en.wikipedia.org/wiki/Commitment_scheme">Commitment schemes</a>.
+Suppose you want to commit to a particular value, but reveal the value itself
+later. For example, I want to do a fair coin toss &ldquo;in my head&rdquo;, without a
+trusted shared coin that two parties can see. I could choose a value <code>r = random()</code>, and then share <code>h = sha256(r)</code>. Then, you could call heads or tails
+(we&rsquo;ll agree that even <code>r</code> means heads, and odd <code>r</code> means tails). After you
+call, I can reveal my value <code>r</code>, and you can confirm that I haven&rsquo;t cheated by
+checking <code>sha256(r)</code> matches the hash I shared earlier.</li>
+</ul>
+<h1 id="key-derivation-functions">Key derivation functions</h1>
+<p>A related concept to cryptographic hashes, <a href="https://en.wikipedia.org/wiki/Key_derivation_function">key derivation
+functions</a> (KDFs) are
+used for a number of applications, including producing fixed-length output for
+use as keys in other cryptographic algorithms. Usually, KDFs are deliberately
+slow, in order to slow down offline brute-force attacks.</p>
+<h2 id="applications-1">Applications</h2>
+<ul>
+<li>Producing keys from passphrases for use in other cryptographic algorithms
+(e.g. symmetric cryptography, see below).</li>
+<li>Storing login credentials. Storing plaintext passwords is bad; the right
+approach is to generate and store a random
+<a href="https://en.wikipedia.org/wiki/Salt_(cryptography)">salt</a> <code>salt = random()</code> for
+each user, store <code>KDF(password + salt)</code>, and verify login attempts by
+re-computing the KDF given the entered password and the stored salt.</li>
+</ul>
+<h1 id="symmetric-cryptography">Symmetric cryptography</h1>
+<p>Hiding message contents is probably the first concept you think about when you
+think about cryptography. Symmetric cryptography accomplishes this with the
+following set of functionality:</p>
+<pre><code>keygen() -&gt; key  (this function is randomized)
+
+encrypt(plaintext: array&lt;byte&gt;, key) -&gt; array&lt;byte&gt;  (the ciphertext)
+decrypt(ciphertext: array&lt;byte&gt;, key) -&gt; array&lt;byte&gt;  (the plaintext)
+</code></pre><p>The encrypt function has the property that given the output (ciphertext), it&rsquo;s
+hard to determine the input (plaintext) without the key. The decrypt function
+has the obvious correctness property, that <code>decrypt(encrypt(m, k), k) = m</code>.</p>
+<p>An example of a symmetric cryptosystem in wide use today is
+<a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a>.</p>
+<h2 id="applications-2">Applications</h2>
+<ul>
+<li>Encrypting files for storage in an untrusted cloud service. This can be
+combined with KDFs, so you can encrypt a file with a passphrase. Generate <code>key = KDF(passphrase)</code>, and then store <code>encrypt(file, key)</code>.</li>
+</ul>
+<h1 id="asymmetric-cryptography">Asymmetric cryptography</h1>
+<p>The term &ldquo;asymmetric&rdquo; refers to there being two keys, with two different roles.
+A private key, as its name implies, is meant to be kept private, while the
+public key can be publicly shared and it won&rsquo;t affect security (unlike sharing
+the key in a symmetric cryptosystem). Asymmetric cryptosystems provide the
+following set of functionality, to encrypt/decrypt and to sign/verify:</p>
+<pre><code>keygen() -&gt; (public key, private key)  (this function is randomized)
+
+encrypt(plaintext: array&lt;byte&gt;, public key) -&gt; array&lt;byte&gt;  (the ciphertext)
+decrypt(ciphertext: array&lt;byte&gt;, private key) -&gt; array&lt;byte&gt;  (the plaintext)
+
+sign(message: array&lt;byte&gt;, private key) -&gt; array&lt;byte&gt;  (the signature)
+verify(message: array&lt;byte&gt;, signature: array&lt;byte&gt;, public key) -&gt; bool  (whether or not the signature is valid)
+</code></pre><p>The encrypt/decrypt functions have properties similar to their analogs from
+symmetric cryptosystems. A message can be encrypted using the <em>public</em> key.
+Given the output (ciphertext), it&rsquo;s hard to determine the input (plaintext)
+without the <em>private</em> key. The decrypt function has the obvious correctness
+property, that <code>decrypt(encrypt(m, public key), private key) = m</code>.</p>
+<p>Symmetric and asymmetric encryption can be compared to physical locks. A
+symmetric cryptosystem is like a door lock: anyone with the key can lock and
+unlock it. Asymmetric encryption is like a padlock with a key. You could give
+the unlocked lock to someone (the public key), they could put a message in a
+box and then put the lock on, and after that, only you could open the lock
+because you kept the key (the private key).</p>
+<p>The sign/verify functions have the same properties that you would hope physical
+signatures would have, in that it&rsquo;s hard to forge a signature. No matter the
+message, without the <em>private</em> key, it&rsquo;s hard to produce a signature such that
+<code>verify(message, signature, public key)</code> returns true. And of course, the
+verify function has the obvious correctness property that <code>verify(message, sign(message, private key), public key) = true</code>.</p>
+<h2 id="applications-3">Applications</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Pretty_Good_Privacy">PGP email encryption</a>.
+People can have their public keys posted online (e.g. in a PGP keyserver, or on
+<a href="https://keybase.io/">Keybase</a>). Anyone can send them encrypted email.</li>
+<li>Private messaging. Apps like <a href="https://signal.org/">Signal</a> and
+<a href="https://keybase.io/">Keybase</a> use asymmetric keys to establish private
+communication channels.</li>
+<li>Signing software. Git can have GPG-signed commits and tags. With a posted
+public key, anyone can verify the authenticity of downloaded software.</li>
+</ul>
+<h2 id="key-distribution">Key distribution</h2>
+<p>Asymmetric-key cryptography is wonderful, but it has a big challenge of
+distributing public keys / mapping public keys to real-world identities. There
+are many solutions to this problem. Signal has one simple solution: trust on
+first use, and support out-of-band public key exchange (you verify your
+friends&rsquo; &ldquo;safety numbers&rdquo; in person). PGP has a different solution, which is
+<a href="https://en.wikipedia.org/wiki/Web_of_trust">web of trust</a>. Keybase has yet
+another solution of <a href="https://keybase.io/blog/chat-apps-softer-than-tofu">social
+proof</a> (along with other
+neat ideas). Each model has its merits; we (the instructors) like Keybase&rsquo;s
+model.</p>
+<h1 id="case-studies">Case studies</h1>
+<h2 id="password-managers">Password managers</h2>
+<p>This is an essential tool that everyone should try to use (e.g.
+<a href="https://keepassxc.org/">KeePassXC</a>). Password managers let you use unique,
+randomly generated high-entropy passwords for all your websites, and they save
+all your passwords in one place, encrypted with a symmetric cipher with a key
+produced from a passphrase using a KDF.</p>
+<p>Using a password manager lets you avoid password reuse (so you&rsquo;re less impacted
+when websites get compromised), use high-entropy passwords (so you&rsquo;re less likely to
+get compromised), and only need to remember a single high-entropy password.</p>
+<h2 id="two-factor-authentication">Two-factor authentication</h2>
+<p><a href="https://en.wikipedia.org/wiki/Multi-factor_authentication">Two-factor
+authentication</a>
+(2FA) requires you to use a passphrase (&ldquo;something you know&rdquo;) along with a 2FA
+authenticator (like a <a href="https://www.yubico.com/">YubiKey</a>, &ldquo;something you have&rdquo;)
+in order to protect against stolen passwords and
+<a href="https://en.wikipedia.org/wiki/Phishing">phishing</a> attacks.</p>
+<h2 id="full-disk-encryption">Full disk encryption</h2>
+<p>Keeping your laptop&rsquo;s entire disk encrypted is an easy way to protect your data
+in the case that your laptop is stolen. You can use <a href="https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_a_non-root_file_system">cryptsetup +
+LUKS</a>
+on Linux,
+<a href="https://fossbytes.com/enable-full-disk-encryption-windows-10/">BitLocker</a> on
+Windows, or <a href="https://support.apple.com/en-us/HT204837">FileVault</a> on macOS.
+This encrypts the entire disk with a symmetric cipher, with a key protected by
+a passphrase.</p>
+<h2 id="private-messaging">Private messaging</h2>
+<p>Use <a href="https://signal.org/">Signal</a> or <a href="https://keybase.io/">Keybase</a>. End-to-end
+security is bootstrapped from asymmetric-key encryption. Obtaining your
+contacts&rsquo; public keys is the critical step here. If you want good security, you
+need to authenticate public keys out-of-band (with Signal or Keybase), or trust
+social proofs (with Keybase).</p>
+<h2 id="ssh">SSH</h2>
+<p>We&rsquo;ve covered the use of SSH and SSH keys in an <a href="https://yoseobdoc.github.io/2020/command-line/#remote-machines">earlier
+lecture</a>. Let&rsquo;s look at the cryptography
+aspects of this.</p>
+<p>When you run <code>ssh-keygen</code>, it generates an asymmetric keypair, <code>public_key, private_key</code>. This is generated randomly, using entropy provided by the
+operating system (collected from hardware events, etc.). The public key is
+stored as-is (it&rsquo;s public, so keeping it a secret is not important), but at
+rest, the private key should be encrypted on disk. The <code>ssh-keygen</code> program
+prompts the user for a passphrase, and this is fed through a key derivation
+function to produce a key, which is then used to encrypt the private key with a
+symmetric cipher.</p>
+<p>In use, once the server knows the client&rsquo;s public key (stored in the
+<code>.ssh/authorized_keys</code> file), a connecting client can prove its identity using
+asymmetric signatures. This is done through
+<a href="https://en.wikipedia.org/wiki/Challenge%E2%80%93response_authentication">challenge-response</a>.
+At a high level, the server picks a random number and sends it to the client.
+The client then signs this message and sends the signature back to the server,
+which checks the signature against the public key on record. This effectively
+proves that the client is in possession of the private key corresponding to the
+public key that&rsquo;s in the server&rsquo;s <code>.ssh/authorized_keys</code> file, so the server
+can allow the client to log in.</p>
+<p>{% comment %}
+extra topics, if there&rsquo;s time</p>
+<p>security concepts, tips</p>
+<ul>
+<li>biometrics</li>
+<li>HTTPS
+{% endcomment %}</li>
+</ul>
+<h1 id="resources">Resources</h1>
+<ul>
+<li><a href="https://yoseobdoc.github.io/2019/security/">Last year&rsquo;s notes</a>: from when this lecture was more focused on security and privacy as a computer user</li>
+<li><a href="https://latacora.micro.blog/2018/04/03/cryptographic-right-answers.html">Cryptographic Right Answers</a>: answers &ldquo;what crypto should I use for X?&rdquo; for many common X.</li>
+</ul>
+<h1 id="exercises">Exercises</h1>
+<ol>
+<li><strong>Entropy.</strong>
+<ol>
+<li>Suppose a password is chosen as a concatenation of four lower-case
+dictionary words, where each word is selected uniformly at random from a
+dictionary of size 100,000. An example of such a password is
+<code>correcthorsebatterystaple</code>. How many bits of entropy does this have?</li>
+<li>Consider an alternative scheme where a password is chosen as a sequence
+of 8 random alphanumeric characters (including both lower-case and
+upper-case letters). An example is <code>rg8Ql34g</code>. How many bits of entropy
+does this have?</li>
+<li>Which is the stronger password?</li>
+<li>Suppose an attacker can try guessing 10,000 passwords per second. On
+average, how long will it take to break each of the passwords?</li>
+</ol>
+</li>
+<li><strong>Cryptographic hash functions.</strong> Download a Debian image from a
+<a href="https://www.debian.org/CD/http-ftp/">mirror</a> (e.g. <a href="http://debian.xfree.com.ar/debian-cd/current/amd64/iso-cd/">from this Argentinean
+mirror</a>.
+Cross-check the hash (e.g. using the <code>sha256sum</code> command) with the hash
+retrieved from the official Debian site (e.g. <a href="https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS">this
+file</a>
+hosted at <code>debian.org</code>, if you&rsquo;ve downloaded the linked file from the
+Argentinean mirror).</li>
+<li><strong>Symmetric cryptography.</strong> Encrypt a file with AES encryption, using
+<a href="https://www.openssl.org/">OpenSSL</a>: <code>openssl aes-256-cbc -salt -in {input filename} -out {output filename}</code>. Look at the contents using <code>cat</code> or
+<code>hexdump</code>. Decrypt it with <code>openssl aes-256-cbc -d -in {input filename} -out {output filename}</code> and confirm that the contents match the original using
+<code>cmp</code>.</li>
+<li><strong>Asymmetric cryptography.</strong>
+<ol>
+<li>Set up <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2">SSH
+keys</a>
+on a computer you have access to (not Athena, because Kerberos interacts
+weirdly with SSH keys). Rather than using RSA keys as in the linked
+tutorial, use more secure <a href="https://wiki.archlinux.org/index.php/SSH_keys#Ed25519">ED25519
+keys</a>. Make sure
+your private key is encrypted with a passphrase, so it is protected at
+rest.</li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-sign-messages">Set up GPG</a></li>
+<li>Send Anish an encrypted email (<a href="https://keybase.io/anish">public key</a>).</li>
+<li>Sign a Git commit with <code>git commit -S</code> or create a signed Git tag with
+<code>git tag -s</code>. Verify the signature on the commit with <code>git show --show-signature</code> or on the tag with <code>git tag -v</code>.</li>
+</ol>
+</li>
+</ol>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+            
+            <div class="post-actions-wrap">
+  
+</div>
+     
+
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Porco Rosso. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        <div class="post-actions-wrap">
+  
+</div>
+     
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="1">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/se6644%25!%28EXTRA%20string=https%3A%2F%2Fyoseobdoc.github.io%2Fpage%2Fsecurity%2F%29">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Porco Rosso</h4>
+    
+      <div id="about-card-bio">Porco treats himself to dinner at the Hotel Adriano, which is run by his friend Gina.</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        an Italian World War I fighter ace and freelance bounty hunter
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Adriatic Sea
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('http://user-images.githubusercontent.com/33090364/88197328-981a7500-cc42-11ea-855f-600fead66a4a.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://yoseobdoc.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+
+
+
+
+    
+  </body>
+</html>
+

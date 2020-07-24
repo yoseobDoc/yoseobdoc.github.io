@@ -3,6 +3,59 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://yoseobdoc.github.io/page/course-shell/</loc>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/page/shell-tools/</loc>
+    <lastmod>2019-01-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/page/editors/</loc>
+    <lastmod>2019-01-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/page/data-wrangling/</loc>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/page/command-line/</loc>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/page/version-control/</loc>
+    <lastmod>2019-01-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/page/debugging-profiling/</loc>
+    <lastmod>2019-01-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/page/metaprogramming/</loc>
+    <lastmod>2019-01-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/page/security/</loc>
+    <lastmod>2019-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/page/potpourri/</loc>
+    <lastmod>2019-01-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/page/qa/</loc>
+    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://yoseobdoc.github.io/categories/</loc>
     <lastmod>2020-07-22T00:00:00+00:00</lastmod>
   </url>
@@ -25,6 +78,16 @@
   <url>
     <loc>https://yoseobdoc.github.io/2020/07/%EC%86%8C%EA%B8%88-%EC%A7%80%EB%B0%A9-%EC%82%B0-%EC%97%B4/</loc>
     <lastmod>2020-07-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/categories/missing-semester/</loc>
+    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/page/</loc>
+    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>

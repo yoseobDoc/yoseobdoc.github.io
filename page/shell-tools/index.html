@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="Porco Rosso">
+<meta name="keywords" content="tech">
+<meta name="description" content="In this lecture, we will present some of the basics of using bash as a scripting language along with a number of shell tools that cover several of the most common tasks that you will be constantly performing in the command line.
+Shell Scripting So far we have seen how to execute commands in the shell and pipe them together. However, in many scenarios you will want to perform a series of commands and make use of control flow expressions like conditionals or loops.">
+
+
+<meta property="og:description" content="In this lecture, we will present some of the basics of using bash as a scripting language along with a number of shell tools that cover several of the most common tasks that you will be constantly performing in the command line.
+Shell Scripting So far we have seen how to execute commands in the shell and pipe them together. However, in many scenarios you will want to perform a series of commands and make use of control flow expressions like conditionals or loops.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell Tools and Scripting">
+<meta name="twitter:title" content="Shell Tools and Scripting">
+<meta property="og:url" content="https://yoseobdoc.github.io/page/shell-tools/">
+<meta property="twitter:url" content="https://yoseobdoc.github.io/page/shell-tools/">
+<meta property="og:site_name" content="YoseobDoc">
+<meta property="og:description" content="In this lecture, we will present some of the basics of using bash as a scripting language along with a number of shell tools that cover several of the most common tasks that you will be constantly performing in the command line.
+Shell Scripting So far we have seen how to execute commands in the shell and pipe them together. However, in many scenarios you will want to perform a series of commands and make use of control flow expressions like conditionals or loops.">
+<meta name="twitter:description" content="In this lecture, we will present some of the basics of using bash as a scripting language along with a number of shell tools that cover several of the most common tasks that you will be constantly performing in the command line.
+Shell Scripting So far we have seen how to execute commands in the shell and pipe them together. However, in many scenarios you will want to perform a series of commands and make use of control flow expressions like conditionals or loops.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2019-01-14T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2019-01-14T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Missing-Semester">
+    
+  
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@se6644">
+
+
+  <meta name="twitter:creator" content="@se6644">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=640">
+
+
+    <title>Shell Tools and Scripting</title>
+
+    <link rel="icon" href="https://yoseobdoc.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://yoseobdoc.github.io/page/shell-tools/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://yoseobdoc.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-108668950-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="1">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://yoseobdoc.github.io/">YoseobDoc</a>
+  </div>
+  
+    
+      <a class="header-right-icon open-algolia-search"
+         href="https://yoseobdoc.github.io/#search">
+    
+    
+      <i class="fa fa-lg fa-search"></i>
+    
+    
+    </a>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  
+    window.addEventListener('load', (event) => {
+        document.querySelectorAll("mjx-container").forEach(function(x){
+          x.parentElement.classList += 'has-jax'})
+      });
+  
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</header>
+
+      <nav id="sidebar" data-behavior="1">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://yoseobdoc.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Porco Rosso</h4>
+        
+          <h5 class="sidebar-profile-bio">Porco treats himself to dinner at the Hotel Adriano, which is run by his friend Gina.</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/page">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">./missing-semester</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/yoseobDoc" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://yoseobdoc.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="1"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Shell Tools and Scripting
+    </h1>
+  
+  
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/kgII-YWo3Zw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>In this lecture, we will present some of the basics of using bash as a scripting language along with a number of shell tools that cover several of the most common tasks that you will be constantly performing in the command line.</p>
+<h1 id="shell-scripting">Shell Scripting</h1>
+<p>So far we have seen how to execute commands in the shell and pipe them together.
+However, in many scenarios you will want to perform a series of commands and make use of control flow expressions like conditionals or loops.</p>
+<p>Shell scripts are the next step in complexity.
+Most shells have their own scripting language with variables, control flow and its own syntax.
+What makes shell scripting different from other scripting programming language is that it is optimized for performing shell-related tasks.
+Thus, creating command pipelines, saving results into files, and reading from standard input are primitives in shell scripting, which makes it easier to use than general purpose scripting languages.
+For this section we will focus on bash scripting since it is the most common.</p>
+<p>To assign variables in bash, use the syntax <code>foo=bar</code> and access the value of the variable with <code>$foo</code>.
+Note that <code>foo = bar</code> will not work since it is interpreted as calling the <code>foo</code> program with arguments <code>=</code> and <code>bar</code>.
+In general, in shell scripts the space character will perform argument splitting. This behavior can be confusing to use at first, so always check for that.</p>
+<p>Strings in bash can be defined with <code>'</code> and <code>&quot;</code> delimiters, but they are not equivalent.
+Strings delimited with <code>'</code> are literal strings and will not substitute variable values whereas <code>&quot;</code> delimited strings will.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">foo<span style="color:#f92672">=</span>bar
+echo <span style="color:#e6db74">&#34;</span>$foo<span style="color:#e6db74">&#34;</span>
+<span style="color:#75715e"># prints bar</span>
+echo <span style="color:#e6db74">&#39;$foo&#39;</span>
+<span style="color:#75715e"># prints $foo</span>
+</code></pre></div><p>As with most programming languages, bash supports control flow techniques including <code>if</code>, <code>case</code>, <code>while</code> and <code>for</code>.
+Similarly, <code>bash</code> has functions that take arguments and can operate with them. Here is an example of a function that creates a directory and <code>cd</code>s into it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mcd <span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    mkdir -p <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span>
+    cd <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Here <code>$1</code> is the first argument to the script/function.
+Unlike other scripting languages, bash uses a variety of special variables to refer to arguments, error codes, and other relevant variables. Below is a list of some of them. A more comprehensive list can be found <a href="https://www.tldp.org/LDP/abs/html/special-chars.html">here</a>.</p>
+<ul>
+<li><code>$0</code> - Name of the script</li>
+<li><code>$1</code> to <code>$9</code> - Arguments to the script. <code>$1</code> is the first argument and so on.</li>
+<li><code>$@</code> - All the arguments</li>
+<li><code>$#</code> - Number of arguments</li>
+<li><code>$?</code> - Return code of the previous command</li>
+<li><code>$$</code> - Process identification number (PID) for the current script</li>
+<li><code>!!</code> - Entire last command, including arguments. A common pattern is to execute a command only for it to fail due to missing permissions; you can quickly re-execute the command with sudo by doing <code>sudo !!</code></li>
+<li><code>$_</code> - Last argument from the last command. If you are in an interactive shell, you can also quickly get this value by typing <code>Esc</code> followed by <code>.</code></li>
+</ul>
+<p>Commands will often return output using <code>STDOUT</code>, errors through <code>STDERR</code>, and a Return Code to report errors in a more script-friendly manner.
+The return code or exit status is the way scripts/commands have to communicate how execution went.
+A value of 0 usually means everything went OK; anything different from 0 means an error occurred.</p>
+<p>Exit codes can be used to conditionally execute commands using <code>&amp;&amp;</code> (and operator) and <code>||</code> (or operator), both of which are <a href="https://en.wikipedia.org/wiki/Short-circuit_evaluation">short-circuiting</a> operators. Commands can also be separated within the same line using a semicolon <code>;</code>.
+The <code>true</code> program will always have a 0 return code and the <code>false</code> command will always have a 1 return code.
+Let&rsquo;s see some examples</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">false <span style="color:#f92672">||</span> echo <span style="color:#e6db74">&#34;Oops, fail&#34;</span>
+<span style="color:#75715e"># Oops, fail</span>
+
+true <span style="color:#f92672">||</span> echo <span style="color:#e6db74">&#34;Will not be printed&#34;</span>
+#
+
+true <span style="color:#f92672">&amp;&amp;</span> echo <span style="color:#e6db74">&#34;Things went well&#34;</span>
+<span style="color:#75715e"># Things went well</span>
+
+false <span style="color:#f92672">&amp;&amp;</span> echo <span style="color:#e6db74">&#34;Will not be printed&#34;</span>
+#
+
+true ; echo <span style="color:#e6db74">&#34;This will always run&#34;</span>
+<span style="color:#75715e"># This will always run</span>
+
+false ; echo <span style="color:#e6db74">&#34;This will always run&#34;</span>
+<span style="color:#75715e"># This will always run</span>
+</code></pre></div><p>Another common pattern is wanting to get the output of a command as a variable. This can be done with <em>command substitution</em>.
+Whenever you place <code>$( CMD )</code> it will execute <code>CMD</code>, get the output of the command and substitute it in place.
+For example, if you do <code>for file in $(ls)</code>, the shell will first call <code>ls</code> and then iterate over those values.
+A lesser known similar feature is <em>process substitution</em>, <code>&lt;( CMD )</code> will execute <code>CMD</code> and place the output in a temporary file and substitute the <code>&lt;()</code> with that file&rsquo;s name. This is useful when commands expect values to be passed by file instead of by STDIN. For example, <code>diff &lt;(ls foo) &lt;(ls bar)</code> will show differences between files in dirs  <code>foo</code> and <code>bar</code>.</p>
+<p>Since that was a huge information dump, let&rsquo;s see an example that showcases some of these features. It will iterate through the arguments we provide, <code>grep</code> for the string <code>foobar</code>, and append it to the file as a comment if it&rsquo;s not found.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>
+echo <span style="color:#e6db74">&#34;Starting program at </span><span style="color:#66d9ef">$(</span>date<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#75715e"># Date will be substituted</span>
+
+echo <span style="color:#e6db74">&#34;Running program </span>$0<span style="color:#e6db74"> with </span>$#<span style="color:#e6db74"> arguments with pid </span>$$<span style="color:#e6db74">&#34;</span>
+
+<span style="color:#66d9ef">for</span> file in <span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">do</span>
+    grep foobar <span style="color:#e6db74">&#34;</span>$file<span style="color:#e6db74">&#34;</span> &gt; /dev/null 2&gt; /dev/null
+    <span style="color:#75715e"># When pattern is not found, grep has exit status 1</span>
+    <span style="color:#75715e"># We redirect STDOUT and STDERR to a null register since we do not care about them</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> $? -ne <span style="color:#ae81ff">0</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
+        echo <span style="color:#e6db74">&#34;File </span>$file<span style="color:#e6db74"> does not have any foobar, adding one&#34;</span>
+        echo <span style="color:#e6db74">&#34;# foobar&#34;</span> &gt;&gt; <span style="color:#e6db74">&#34;</span>$file<span style="color:#e6db74">&#34;</span>
+    <span style="color:#66d9ef">fi</span>
+<span style="color:#66d9ef">done</span>
+</code></pre></div><p>In the comparison we tested whether <code>$?</code> was not equal to 0.
+Bash implements many comparisons of this sort - you can find a detailed list in the manpage for <a href="https://www.man7.org/linux/man-pages/man1/test.1.html"><code>test</code></a>.
+When performing comparisons in bash, try to use double brackets <code>[[ ]]</code> in favor of simple brackets <code>[ ]</code>. Chances of making mistakes are lower although it won&rsquo;t be portable to <code>sh</code>. A more detailed explanation can be found <a href="http://mywiki.wooledge.org/BashFAQ/031">here</a>.</p>
+<p>When launching scripts, you will often want to provide arguments that are similar. Bash has ways of making this easier, expanding expressions by carrying out filename expansion. These techniques are often referred to as shell <em>globbing</em>.</p>
+<ul>
+<li>Wildcards - Whenever you want to perform some sort of wildcard matching, you can use <code>?</code> and <code>*</code> to match one or any amount of characters respectively. For instance, given files <code>foo</code>, <code>foo1</code>, <code>foo2</code>, <code>foo10</code> and <code>bar</code>, the command <code>rm foo?</code> will delete <code>foo1</code> and <code>foo2</code> whereas <code>rm foo*</code> will delete all but <code>bar</code>.</li>
+<li>Curly braces <code>{}</code> - Whenever you have a common substring in a series of commands, you can use curly braces for bash to expand this automatically. This comes in very handy when moving or converting files.</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">convert image.<span style="color:#f92672">{</span>png,jpg<span style="color:#f92672">}</span>
+<span style="color:#75715e"># Will expand to</span>
+convert image.png image.jpg
+
+cp /path/to/project/<span style="color:#f92672">{</span>foo,bar,baz<span style="color:#f92672">}</span>.sh /newpath
+<span style="color:#75715e"># Will expand to</span>
+cp /path/to/project/foo.sh /path/to/project/bar.sh /path/to/project/baz.sh /newpath
+
+<span style="color:#75715e"># Globbing techniques can also be combined</span>
+mv *<span style="color:#f92672">{</span>.py,.sh<span style="color:#f92672">}</span> folder
+<span style="color:#75715e"># Will move all *.py and *.sh files</span>
+
+
+mkdir foo bar
+<span style="color:#75715e"># This creates files foo/a, foo/b, ... foo/h, bar/a, bar/b, ... bar/h</span>
+touch <span style="color:#f92672">{</span>foo,bar<span style="color:#f92672">}</span>/<span style="color:#f92672">{</span>a..h<span style="color:#f92672">}</span>
+touch foo/x bar/y
+<span style="color:#75715e"># Show differences between files in foo and bar</span>
+diff &lt;<span style="color:#f92672">(</span>ls foo<span style="color:#f92672">)</span> &lt;<span style="color:#f92672">(</span>ls bar<span style="color:#f92672">)</span>
+<span style="color:#75715e"># Outputs</span>
+<span style="color:#75715e"># &lt; x</span>
+<span style="color:#75715e"># ---</span>
+<span style="color:#75715e"># &gt; y</span>
+</code></pre></div><!-- raw HTML omitted -->
+<p>Writing <code>bash</code> scripts can be tricky and unintuitive. There are tools like <a href="https://github.com/koalaman/shellcheck">shellcheck</a> that will help you find errors in your sh/bash scripts.</p>
+<p>Note that scripts need not necessarily be written in bash to be called from the terminal. For instance, here&rsquo;s a simple Python script that outputs its arguments in reversed order:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/local/bin/python</span>
+<span style="color:#f92672">import</span> sys
+<span style="color:#66d9ef">for</span> arg <span style="color:#f92672">in</span> reversed(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>:]):
+    <span style="color:#66d9ef">print</span>(arg)
+</code></pre></div><p>The kernel knows to execute this script with a python interpreter instead of a shell command because we included a <a href="https://en.wikipedia.org/wiki/Shebang_(Unix)">shebang</a> line at the top of the script.
+It is good practice to write shebang lines using the <a href="https://www.man7.org/linux/man-pages/man1/env.1.html"><code>env</code></a> command that will resolve to wherever the command lives in the system, increasing the portability of your scripts. To resolve the location, <code>env</code> will make use of the <code>PATH</code> environment variable we introduced in the first lecture.
+For this example the shebang line would look like <code>#!/usr/bin/env python</code>.</p>
+<p>Some differences between shell functions and scripts that you should keep in mind are:</p>
+<ul>
+<li>Functions have to be in the same language as the shell, while scripts can be written in any language. This is why including a shebang for scripts is important.</li>
+<li>Functions are loaded once when their definition is read. Scripts are loaded every time they are executed. This makes functions slightly faster to load, but whenever you change them you will have to reload their definition.</li>
+<li>Functions are executed in the current shell environment whereas scripts execute in their own process. Thus, functions can modify environment variables, e.g. change your current directory, whereas scripts can&rsquo;t. Scripts will be passed by value environment variables that have been exported using <a href="https://www.man7.org/linux/man-pages/man1/export.1p.html"><code>export</code></a></li>
+<li>As with any programming language, functions are a powerful construct to achieve modularity, code reuse, and clarity of shell code. Often shell scripts will include their own function definitions.</li>
+</ul>
+<h1 id="shell-tools">Shell Tools</h1>
+<h2 id="finding-how-to-use-commands">Finding how to use commands</h2>
+<p>At this point, you might be wondering how to find the flags for the commands in the aliasing section such as <code>ls -l</code>, <code>mv -i</code> and <code>mkdir -p</code>.
+More generally, given a command, how do you go about finding out what it does and its different options?
+You could always start googling, but since UNIX predates StackOverflow, there are built-in ways of getting this information.</p>
+<p>As we saw in the shell lecture, the first-order approach is to call said command with the <code>-h</code> or <code>--help</code> flags. A more detailed approach is to use the <code>man</code> command.
+Short for manual, <a href="https://www.man7.org/linux/man-pages/man1/man.1.html"><code>man</code></a> provides a manual page (called manpage) for a command you specify.
+For example, <code>man rm</code> will output the behavior of the <code>rm</code> command along with the flags that it takes, including the <code>-i</code> flag we showed earlier.
+In fact, what I have been linking so far for every command is the online version of the Linux manpages for the commands.
+Even non-native commands that you install will have manpage entries if the developer wrote them and included them as part of the installation process.
+For interactive tools such as the ones based on ncurses, help for the commands can often be accessed within the program using the <code>:help</code> command or typing <code>?</code>.</p>
+<p>Sometimes manpages can provide overly detailed descriptions of the commands, making it hard to decipher what flags/syntax to use for common use cases.
+<a href="https://tldr.sh/">TLDR pages</a> are a nifty complementary solution that focuses on giving example use cases of a command so you can quickly figure out which options to use.
+For instance, I find myself referring back to the tldr pages for <a href="https://tldr.ostera.io/tar"><code>tar</code></a> and <a href="https://tldr.ostera.io/ffmpeg"><code>ffmpeg</code></a> way more often than the manpages.</p>
+<h2 id="finding-files">Finding files</h2>
+<p>One of the most common repetitive tasks that every programmer faces is finding files or directories.
+All UNIX-like systems come packaged with <a href="https://www.man7.org/linux/man-pages/man1/find.1.html"><code>find</code></a>, a great shell tool to find files. <code>find</code> will recursively search for files matching some criteria. Some examples:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Find all directories named src</span>
+find . -name src -type d
+<span style="color:#75715e"># Find all python files that have a folder named test in their path</span>
+find . -path <span style="color:#e6db74">&#39;*/test/*.py&#39;</span> -type f
+<span style="color:#75715e"># Find all files modified in the last day</span>
+find . -mtime -1
+<span style="color:#75715e"># Find all zip files with size in range 500k to 10M</span>
+find . -size +500k -size -10M -name <span style="color:#e6db74">&#39;*.tar.gz&#39;</span>
+</code></pre></div><p>Beyond listing files, find can also perform actions over files that match your query.
+This property can be incredibly helpful to simplify what could be fairly monotonous tasks.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Delete all files with .tmp extension</span>
+find . -name <span style="color:#e6db74">&#39;*.tmp&#39;</span> -exec rm <span style="color:#f92672">{}</span> <span style="color:#ae81ff">\;</span>
+<span style="color:#75715e"># Find all PNG files and convert them to JPG</span>
+find . -name <span style="color:#e6db74">&#39;*.png&#39;</span> -exec convert <span style="color:#f92672">{}</span> <span style="color:#f92672">{}</span>.jpg <span style="color:#ae81ff">\;</span>
+</code></pre></div><p>Despite <code>find</code>'s ubiquitousness, its syntax can sometimes be tricky to remember.
+For instance, to simply find files that match some pattern <code>PATTERN</code> you have to execute <code>find -name '*PATTERN*'</code> (or <code>-iname</code> if you want the pattern matching to be case insensitive).
+You could start building aliases for those scenarios, but part of the shell philosophy is that it is good to explore alternatives.
+Remember, one of the best properties of the shell is that you are just calling programs, so you can find (or even write yourself) replacements for some.
+For instance, <a href="https://github.com/sharkdp/fd"><code>fd</code></a> is a simple, fast, and user-friendly alternative to <code>find</code>.
+It offers some nice defaults like colorized output, default regex matching, and Unicode support. It also has, in my opinion, a more intuitive syntax.
+For example, the syntax to find a pattern <code>PATTERN</code> is <code>fd PATTERN</code>.</p>
+<p>Most would agree that <code>find</code> and <code>fd</code> are good, but some of you might be wondering about the efficiency of looking for files every time versus compiling some sort of index or database for quickly searching.
+That is what <a href="https://www.man7.org/linux/man-pages/man1/locate.1.html"><code>locate</code></a> is for.
+<code>locate</code> uses a database that is updated using <a href="https://www.man7.org/linux/man-pages/man1/updatedb.1.html"><code>updatedb</code></a>.
+In most systems, <code>updatedb</code> is updated daily via <a href="https://www.man7.org/linux/man-pages/man8/cron.8.html"><code>cron</code></a>.
+Therefore one trade-off between the two is speed vs freshness.
+Moreover <code>find</code> and similar tools can also find files using attributes such as file size, modification time, or file permissions, while <code>locate</code> just uses the file name.
+A more in-depth comparison can be found <a href="https://unix.stackexchange.com/questions/60205/locate-vs-find-usage-pros-and-cons-of-each-other">here</a>.</p>
+<h2 id="finding-code">Finding code</h2>
+<p>Finding files by name is useful, but quite often you want to search based on file <em>content</em>.
+A common scenario is wanting to search for all files that contain some pattern, along with where in those files said pattern occurs.
+To achieve this, most UNIX-like systems provide <a href="https://www.man7.org/linux/man-pages/man1/grep.1.html"><code>grep</code></a>, a generic tool for matching patterns from the input text.
+<code>grep</code> is an incredibly valuable shell tool that we will cover in greater detail during the data wrangling lecture.</p>
+<p>For now, know that <code>grep</code> has many flags that make it a very versatile tool.
+Some I frequently use are <code>-C</code> for getting <strong>C</strong>ontext around the matching line and <code>-v</code> for in<strong>v</strong>erting the match, i.e. print all lines that do <strong>not</strong> match the pattern. For example, <code>grep -C 5</code> will print 5 lines before and after the match.
+When it comes to quickly searching through many files, you want to use <code>-R</code> since it will <strong>R</strong>ecursively go into directories and look for files for the matching string.</p>
+<p>But <code>grep -R</code> can be improved in many ways, such as ignoring <code>.git</code> folders, using multi CPU support, &amp;c.
+Many <code>grep</code> alternatives have been developed, including <a href="https://beyondgrep.com/">ack</a>, <a href="https://github.com/ggreer/the_silver_searcher">ag</a> and <a href="https://github.com/BurntSushi/ripgrep">rg</a>.
+All of them are fantastic and pretty much provide the same functionality.
+For now I am sticking with ripgrep (<code>rg</code>), given how fast and intuitive it is. Some examples:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Find all python files where I used the requests library</span>
+rg -t py <span style="color:#e6db74">&#39;import requests&#39;</span>
+<span style="color:#75715e"># Find all files (including hidden files) without a shebang line</span>
+rg -u --files-without-match <span style="color:#e6db74">&#34;^#!&#34;</span>
+<span style="color:#75715e"># Find all matches of foo and print the following 5 lines</span>
+rg foo -A <span style="color:#ae81ff">5</span>
+<span style="color:#75715e"># Print statistics of matches (# of matched lines and files )</span>
+rg --stats PATTERN
+</code></pre></div><p>Note that as with <code>find</code>/<code>fd</code>, it is important that you know that these problems can be quickly solved using one of these tools, while the specific tools you use are not as important.</p>
+<h2 id="finding-shell-commands">Finding shell commands</h2>
+<p>So far we have seen how to find files and code, but as you start spending more time in the shell, you may want to find specific commands you typed at some point.
+The first thing to know is that typing the up arrow will give you back your last command, and if you keep pressing it you will slowly go through your shell history.</p>
+<p>The <code>history</code> command will let you access your shell history programmatically.
+It will print your shell history to the standard output.
+If we want to search there we can pipe that output to <code>grep</code> and search for patterns.
+<code>history | grep find</code> will print commands that contain the substring &ldquo;find&rdquo;.</p>
+<p>In most shells, you can make use of <code>Ctrl+R</code> to perform backwards search through your history.
+After pressing <code>Ctrl+R</code>, you can type a substring you want to match for commands in your history.
+As you keep pressing it, you will cycle through the matches in your history.
+This can also be enabled with the UP/DOWN arrows in <a href="https://github.com/zsh-users/zsh-history-substring-search">zsh</a>.
+A nice addition on top of <code>Ctrl+R</code> comes with using <a href="https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings#ctrl-r">fzf</a> bindings.
+<code>fzf</code> is a general-purpose fuzzy finder that can be used with many commands.
+Here it is used to fuzzily match through your history and present results in a convenient and visually pleasing manner.</p>
+<p>Another cool history-related trick I really enjoy is <strong>history-based autosuggestions</strong>.
+First introduced by the <a href="https://fishshell.com/">fish</a> shell, this feature dynamically autocompletes your current shell command with the most recent command that you typed that shares a common prefix with it.
+It can be enabled in <a href="https://github.com/zsh-users/zsh-autosuggestions">zsh</a> and it is a great quality of life trick for your shell.</p>
+<p>Lastly, a thing to have in mind is that if you start a command with a leading space it won&rsquo;t be added to your shell history.
+This comes in handy when you are typing commands with passwords or other bits of sensitive information.
+If you make the mistake of not adding the leading space, you can always manually remove the entry by editing your <code>.bash_history</code> or <code>.zhistory</code>.</p>
+<h2 id="directory-navigation">Directory Navigation</h2>
+<p>So far, we have assumed that you are already where you need to be to perform these actions. But how do you go about quickly navigating directories?
+There are many simple ways that you could do this, such as writing shell aliases or creating symlinks with <a href="https://www.man7.org/linux/man-pages/man1/ln.1.html">ln -s</a>, but the truth is that developers have figured out quite clever and sophisticated solutions by now.</p>
+<p>As with the theme of this course, you often want to optimize for the common case.
+Finding frequent and/or recent files and directories can be done through tools like <a href="https://github.com/clvv/fasd"><code>fasd</code></a> and <a href="https://github.com/wting/autojump"><code>autojump</code></a>.
+Fasd ranks files and directories by <a href="https://developer.mozilla.org/en/The_Places_frecency_algorithm"><em>frecency</em></a>, that is, by both <em>frequency</em> and <em>recency</em>.
+By default, <code>fasd</code> adds a <code>z</code> command that you can use to quickly <code>cd</code> using a substring of a <em>frecent</em> directory. For example, if you often go to <code>/home/user/files/cool_project</code> you can simply use <code>z cool</code> to jump there. Using autojump, this same change of directory could be accomplished using <code>j cool</code>.</p>
+<p>More complex tools exist to quickly get an overview of a directory structure: <a href="https://linux.die.net/man/1/tree"><code>tree</code></a>, <a href="https://github.com/Canop/broot"><code>broot</code></a> or even full fledged file managers like <a href="https://github.com/jarun/nnn"><code>nnn</code></a> or <a href="https://github.com/ranger/ranger"><code>ranger</code></a>.</p>
+<h1 id="exercises">Exercises</h1>
+<ol>
+<li>
+<p>Read <a href="https://www.man7.org/linux/man-pages/man1/ls.1.html"><code>man ls</code></a> and write an <code>ls</code> command that lists files in the following manner</p>
+<ul>
+<li>Includes all files, including hidden files</li>
+<li>Sizes are listed in human readable format (e.g. 454M instead of 454279954)</li>
+<li>Files are ordered by recency</li>
+<li>Output is colorized</li>
+</ul>
+<p>A sample output would look like this</p>
+<pre><code>-rw-r--r--   1 user group 1.1M Jan 14 09:53 baz
+drwxr-xr-x   5 user group  160 Jan 14 09:53 .
+-rw-r--r--   1 user group  514 Jan 14 06:42 bar
+-rw-r--r--   1 user group 106M Jan 13 12:12 foo
+drwx------+ 47 user group 1.5K Jan 12 18:08 ..
+</code></pre></li>
+</ol>
+<p>{% comment %}
+ls -lath &ndash;color=auto
+{% endcomment %}</p>
+<ol>
+<li>Write bash functions  <code>marco</code> and <code>polo</code> that do the following.
+Whenever you execute <code>marco</code> the current working directory should be saved in some manner, then when you execute <code>polo</code>, no matter what directory you are in, <code>polo</code> should <code>cd</code> you back to the directory where you executed <code>marco</code>.
+For ease of debugging you can write the code in a file <code>marco.sh</code> and (re)load the definitions to your shell by executing <code>source marco.sh</code>.</li>
+</ol>
+<p>{% comment %}
+marco() {
+export MARCO=$(pwd)
+}</p>
+<p>polo() {
+cd &ldquo;$MARCO&rdquo;
+}
+{% endcomment %}</p>
+<ol>
+<li>
+<p>Say you have a command that fails rarely. In order to debug it you need to capture its output but it can be time consuming to get a failure run.
+Write a bash script that runs the following script until it fails and captures its standard output and error streams to files and prints everything at the end.
+Bonus points if you can also report how many runs it took for the script to fail.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/usr/bin/env bash
+</span><span style="color:#75715e"></span>
+n<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span> RANDOM <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#66d9ef">))</span>
+
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> n -eq <span style="color:#ae81ff">42</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
+   echo <span style="color:#e6db74">&#34;Something went wrong&#34;</span>
+   &gt;&amp;<span style="color:#ae81ff">2</span> echo <span style="color:#e6db74">&#34;The error was using magic numbers&#34;</span>
+   exit <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">fi</span>
+
+echo <span style="color:#e6db74">&#34;Everything went according to plan&#34;</span>
+</code></pre></div></li>
+</ol>
+<p>{% comment %}
+#!/usr/bin/env bash</p>
+<p>count=0
+until [[ &ldquo;$?&rdquo; -ne 0 ]];
+do
+count=$((count+1))
+./random.sh &amp;&gt; out.txt
+done</p>
+<p>echo &ldquo;found error after $count runs&rdquo;
+cat out.txt
+{% endcomment %}</p>
+<ol>
+<li>
+<p>As we covered in the lecture <code>find</code>'s <code>-exec</code> can be very powerful for performing operations over the files we are searching for.
+However, what if we want to do something with <strong>all</strong> the files, like creating a zip file?
+As you have seen so far commands will take input from both arguments and STDIN.
+When piping commands, we are connecting STDOUT to STDIN, but some commands like <code>tar</code> take inputs from arguments.
+To bridge this disconnect there&rsquo;s the <a href="https://www.man7.org/linux/man-pages/man1/xargs.1.html"><code>xargs</code></a> command which will execute a command using STDIN as arguments.
+For example <code>ls | xargs rm</code> will delete the files in the current directory.</p>
+<p>Your task is to write a command that recursively finds all HTML files in the folder and makes a zip with them. Note that your command should work even if the files have spaces (hint: check <code>-d</code> flag for <code>xargs</code>)
+{% comment %}
+find . -type f -name &ldquo;*.html&rdquo; | xargs -d &lsquo;\n&rsquo;  tar -cvzf archive.tar.gz
+{% endcomment %}</p>
+</li>
+<li>
+<p>(Advanced) Write a command or script to recursively find the most recently modified file in a directory. More generally, can you list all files by recency?</p>
+</li>
+</ol>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+            
+            <div class="post-actions-wrap">
+  
+</div>
+     
+
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Porco Rosso. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        <div class="post-actions-wrap">
+  
+</div>
+     
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="1">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/se6644%25!%28EXTRA%20string=https%3A%2F%2Fyoseobdoc.github.io%2Fpage%2Fshell-tools%2F%29">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/f6c12e465869ce091686fdd55fe58b9e?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Porco Rosso</h4>
+    
+      <div id="about-card-bio">Porco treats himself to dinner at the Hotel Adriano, which is run by his friend Gina.</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        an Italian World War I fighter ace and freelance bounty hunter
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Adriatic Sea
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('http://user-images.githubusercontent.com/33090364/88197328-981a7500-cc42-11ea-855f-600fead66a4a.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://yoseobdoc.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+
+
+
+
+    
+  </body>
+</html>
+
