@@ -57,27 +57,7 @@
   
   <url>
     <loc>https://yoseobdoc.github.io/categories/</loc>
-    <lastmod>2020-07-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yoseobdoc.github.io/categories/newblog/</loc>
-    <lastmod>2020-07-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yoseobdoc.github.io/post/</loc>
-    <lastmod>2020-07-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yoseobdoc.github.io/</loc>
-    <lastmod>2020-07-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yoseobdoc.github.io/2020/07/%EC%86%8C%EA%B8%88-%EC%A7%80%EB%B0%A9-%EC%82%B0-%EC%97%B4/</loc>
-    <lastmod>2020-07-22T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -91,11 +71,44 @@
   </url>
   
   <url>
+    <loc>https://yoseobdoc.github.io/</loc>
+    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://yoseobdoc.github.io/archives/</loc>
   </url>
   
   <url>
+    <loc>https://yoseobdoc.github.io/categories/newblog/</loc>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/tags/pagination/</loc>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/1/01/plotly/</loc>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/post/</loc>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/tags/social/</loc>
+  </url>
+  
+  <url>
     <loc>https://yoseobdoc.github.io/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/tags/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>https://yoseobdoc.github.io/tags/%EC%97%B0%EC%A4%80/</loc>
   </url>
   
 </urlset>
