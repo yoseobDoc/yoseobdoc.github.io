@@ -122,7 +122,8 @@ This lecture is not a substitute for a more rigorous and complete course on comp
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://yoseobdoc.github.io/1/01/plotly/</guid>
-      <description>plotly   plotly </description>
+      <description>plotly     Plotly.d3.json(&#34;/plotly/test.json&#34;, function(err, fig) { Plotly.plot(&#39;\/plotly\/test.json&#39;, fig.data, fig.layout, {responsive: true}); }); 
+plotly </description>
     </item>
     
   </channel>
